@@ -27,6 +27,7 @@ namespace LM.Areas.Admin.Controllers
         {
             var vm = new DashboardViewModel();
             vm.Departments = _context.Departments.ToList();
+            vm.AppUsers = _userManager.Users.ToList();
             return View(vm);
         }
     }
