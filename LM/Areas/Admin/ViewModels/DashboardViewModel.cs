@@ -11,5 +11,6 @@ namespace LM.Areas.Admin.ViewModels
     {
         public ICollection<Department> Departments { get; set; }
         public ICollection<IdentityUser> AppUsers { get; set; }
+        public ICollection<Team> Teams { get; set; }
     }
 }
