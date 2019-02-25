@@ -40,7 +40,10 @@ namespace LM.Areas.Admin.ViewModels
 
         public AppUser User { get; set; }
         public string UserId { get; set; }
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Please select your team")]
         public int TeamId { get; set; }
+        public Team Team { get; set; }
 
     }
 }

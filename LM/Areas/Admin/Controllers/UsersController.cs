@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace LM.Areas.Admin.Controllers
 {
@@ -31,8 +32,7 @@ namespace LM.Areas.Admin.Controllers
         public IActionResult Index()
         {
             UsersViewModel vm = new UsersViewModel();
-            vm.AppUsers = _userManager.GetUsersInRoleAsync("Generic").Result;
-                        
+            vm.AppUsers = _context.AppUsers.Include(u => u.Team).ToList();
             return View(vm);
         }
 

@@ -15,7 +15,7 @@ namespace LM.Models.LM
         //relationship stuff
 
         //relationship with Team
-        public int TeamId { get; set; }
+        public int? TeamId { get; set; }
         public Team Team { get; set; }
 
     }

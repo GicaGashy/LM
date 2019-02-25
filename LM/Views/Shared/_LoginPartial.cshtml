@@ -1,7 +1,7 @@
 @using Microsoft.AspNetCore.Identity
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<LM.Models.LM.AppUser> SignInManager
+@inject UserManager<LM.Models.LM.AppUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -11,7 +11,7 @@
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
             </li>
             <li>
-                <a asp-area="Admin" asp-page="/Dashboard/Index" title="Manage">Dashboard</a>
+                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" title="Manage">Dashboard</a>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>

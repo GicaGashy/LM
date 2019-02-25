@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LM.Areas.Admin.ViewModels;
 using LM.Data;
+using LM.Models.LM;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,9 @@ namespace LM.Areas.Admin.Controllers
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public DashboardController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public DashboardController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
             _userManager = userManager;
