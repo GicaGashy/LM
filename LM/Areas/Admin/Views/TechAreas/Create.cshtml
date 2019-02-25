@@ -1,0 +1,83 @@
+﻿@model LM.Models.LM.TechArea
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="body">
+    <ol class="breadcrumb breadcrumb-bg-pink">
+        <li><a asp-controller="Dashboard" asp-action="Index"><i class="material-icons">home</i> Dashboard</a></li>
+        <li><a asp-action="Index"> Tech Areas</a></li>
+        <li class="active">Create</li>
+    </ol>
+</div>
+
+<!-- Input -->
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    CREATE A NEW TECH AREA
+                    <small>Write the name of the teach area and description</small>
+
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);">Action</a></li>
+                            <li><a href="javascript:void(0);">Another action</a></li>
+                            <li><a href="javascript:void(0);">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <form asp-action="Create" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" placeholder="Teach Area name" />
+                                </div>
+
+                                <div class="form-line m-t-50">
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <textarea asp-for="Description" rows="4" class="form-control no-resize" placeholder="Describe the Teach Area"></textarea>
+                                </div>
+                                <div class="form-line m-t-50">
+                                    <div class="dz-message">
+                                        <div class="drag-icon-cph">
+                                            <i class="material-icons">touch_app</i>
+                                        </div>
+                                        <h3>Upload an image for the Tech Area</h3>
+                                        <em>Please select only one file</em>
+                                    </div>
+                                    <div class="form-control">
+                                        <input name="ImageFile" type="file" />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn bg-purple" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #END# Input -->
+<div>
+    <a class="btn btn-success" asp-action="Index">Back to List</a>
+</div>
+

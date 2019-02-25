@@ -11,25 +11,24 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace LM.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    public class TeamsController : Controller
+    [Authorize(Roles="Admin")]
+    public class TipisController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public TeamsController(ApplicationDbContext context)
+        public TipisController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/Teams
+        // GET: Admin/Tipis
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Teams.Include(t => t.Department);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Tipies.ToListAsync());
         }
 
-        // GET: Admin/Teams/Details/5
+        // GET: Admin/Tipis/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,42 +36,39 @@ namespace LM.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var team = await _context.Teams
-                .Include(t => t.Department)
-                .FirstOrDefaultAsync(m => m.TeamId == id);
-            if (team == null)
+            var tipi = await _context.Tipies
+                .FirstOrDefaultAsync(m => m.TipiId == id);
+            if (tipi == null)
             {
                 return NotFound();
             }
 
-            return View(team);
+            return View(tipi);
         }
 
-        // GET: Admin/Teams/Create
+        // GET: Admin/Tipis/Create
         public IActionResult Create()
         {
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Name");
             return View();
         }
 
-        // POST: Admin/Teams/Create
+        // POST: Admin/Tipis/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TeamId,Name,DepartmentId,Description")] Team team)
+        public async Task<IActionResult> Create([Bind("TipiId,Name,Description,Rate")] Tipi tipi)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(team);
+                _context.Add(tipi);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Name", team.DepartmentId);
-            return View(team);
+            return View(tipi);
         }
 
-        // GET: Admin/Teams/Edit/5
+        // GET: Admin/Tipis/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,37 +76,36 @@ namespace LM.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var team = await _context.Teams.FindAsync(id);
-            if (team == null)
+            var tipi = await _context.Tipies.FindAsync(id);
+            if (tipi == null)
             {
                 return NotFound();
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Name", team.DepartmentId);
-            return View(team);
+            return View(tipi);
         }
 
-        // POST: Admin/Teams/Edit/5
+        // POST: Admin/Tipis/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TeamId,Name,DepartmentId,Description")] Team team)
+        public async Task<IActionResult> Edit(int id, [Bind("TipiId,Name,Description,Rate")] Tipi tipi)
         {
-
-            if (id != team.TeamId)
+            if (id != tipi.TipiId)
             {
                 return NotFound();
             }
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(team);
+                    _context.Update(tipi);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TeamExists(team.TeamId))
+                    if (!TipiExists(tipi.TipiId))
                     {
                         return NotFound();
                     }
@@ -121,11 +116,10 @@ namespace LM.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "Name", team.DepartmentId);
-            return View(team);
+            return View(tipi);
         }
 
-        // GET: Admin/Teams/Delete/5
+        // GET: Admin/Tipis/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,31 +127,30 @@ namespace LM.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var team = await _context.Teams
-                .Include(t => t.Department)
-                .FirstOrDefaultAsync(m => m.TeamId == id);
-            if (team == null)
+            var tipi = await _context.Tipies
+                .FirstOrDefaultAsync(m => m.TipiId == id);
+            if (tipi == null)
             {
                 return NotFound();
             }
 
-            return View(team);
+            return View(tipi);
         }
 
-        // POST: Admin/Teams/Delete/5
+        // POST: Admin/Tipis/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var team = await _context.Teams.FindAsync(id);
-            _context.Teams.Remove(team);
+            var tipi = await _context.Tipies.FindAsync(id);
+            _context.Tipies.Remove(tipi);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TeamExists(int id)
+        private bool TipiExists(int id)
         {
-            return _context.Teams.Any(e => e.TeamId == id);
+            return _context.Tipies.Any(e => e.TipiId == id);
         }
     }
 }

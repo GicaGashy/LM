@@ -1,0 +1,17 @@
+﻿@model LM.Areas.Admin.ViewModels.UsersViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="body">
+    <ol class="breadcrumb breadcrumb-bg-pink">
+        <li><a asp-controller="Dashboard" asp-action="Index"><i class="material-icons">home</i> Dashboard</a></li>
+        <li class="active"> Users</li>
+    </ol>
+</div>
+
+<a asp-action="Create" class="btn bg-teal waves-effect m-b-10">CREATE NEW</a>
+
+<h2>Index</h2>
+

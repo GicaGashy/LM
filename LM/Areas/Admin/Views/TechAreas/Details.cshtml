@@ -1,0 +1,48 @@
+﻿@model LM.Models.LM.TechArea
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="body">
+    <ol class="breadcrumb breadcrumb-bg-pink">
+        <li><a asp-controller="Dashboard" asp-action="Index"><i class="material-icons">home</i> Dashboard</a></li>
+        <li><a asp-action="Index"> Tech Areas</a></li>
+        <li class="active">Details (@Model.Name)</li>
+    </ol>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+        <div class="header bg-green">
+            <h2>
+                @Model.Name
+            </h2>
+            <ul class="header-dropdown m-r-0">
+                <li>
+                    <a href="javascript:void(0);">
+                        <i class="material-icons">info_outline</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                        <i class="material-icons">help_outline</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="body">
+            @Model.Description
+        </div>
+
+        <p class="thumbnail">
+            <img src="~/images/techarea/@Model.Image" class="img-responsive" style="height: 48px; width: 48px;">
+        </p>
+    </div>
+</div>
+
+<div class="btn-group" role="group">
+    <a asp-action="Edit" asp-route-id="@Model.TechAreaId" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>

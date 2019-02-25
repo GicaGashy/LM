@@ -39,9 +39,13 @@
                             </div>
                             <div class="content">
                                 <div class="text">
-                                    <a asp-controller="Departments" asp-action="Index">USERS</a>
+                                    <a asp-controller="Users" asp-action="Index">USERS</a>
                                 </div>
-                                <div class="number count-to" data-from="0" data-to="@Model.AppUsers.Count()" data-speed="1000" data-fresh-interval="20">@Model.Departments.Count()</div>
+                                @{
+                                    int UsersTotal = Model.AppUsers.Count();
+                                <div class="number count-to" data-from="0" data-to="@UsersTotal" data-speed="1000" data-fresh-interval="20">@UsersTotal</div>
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -58,7 +62,10 @@
                                 <div class="text">
                                     <a asp-controller="Departments" asp-action="Index">DEPARTMENTS</a>
                                 </div>
-                                <div class="number count-to" data-from="0" data-to="@Model.Departments.Count()" data-speed="1000" data-fresh-interval="20">@Model.Departments.Count()</div>
+                                @{
+                                    int DepartmentsTotal = Model.Departments.Count();
+                                    <div class="number count-to" data-from="0" data-to="@DepartmentsTotal" data-speed="1000" data-fresh-interval="20">@DepartmentsTotal</div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -71,7 +78,47 @@
                                 <div class="text">
                                     <a asp-controller="Teams" asp-action="Index">TEAMS</a>
                                 </div>
-                                <div class="number count-to" data-from="0" data-to="@Model.Teams.Count()" data-speed="1000" data-fresh-interval="20">@Model.Teams.Count()</div>
+                                @{
+                                    int TeamsTotal = Model.Teams.Count();
+                                    <div class="number count-to" data-from="0" data-to="@TeamsTotal" data-speed="1000" data-fresh-interval="20">@TeamsTotal</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h5 class="m-l-20">SOFTWARE AUX</h5>
+                    <hr />
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box-4">
+                            <div class="icon">
+                                <i class="material-icons col-brown">equalizer</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">
+                                    <a asp-controller="Tipis" asp-action="Index">Types</a>
+                                </div>
+                                @{
+                                    int TipisTotal = Model.Tipis.Count();
+                                    <div class="number count-to" data-from="0" data-to="@TipisTotal" data-speed="1000" data-fresh-interval="20">@TipisTotal</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box-4">
+                            <div class="icon">
+                                <i class="material-icons col-brown">equalizer</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">
+                                    <a asp-controller="TechAreas" asp-action="Index">Tech Areas</a>
+                                </div>
+                                @{
+                                    int TechAreasTotal = Model.TechAreas.Count();
+                                    <div class="number count-to" data-from="0" data-to="@TechAreasTotal" data-speed="1000" data-fresh-interval="20">@TechAreasTotal</div>
+                                }
                             </div>
                         </div>
                     </div>

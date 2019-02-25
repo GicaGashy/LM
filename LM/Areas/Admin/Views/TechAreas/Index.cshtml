@@ -1,13 +1,14 @@
-﻿@model IEnumerable<LM.Models.LM.Department>
+﻿@model IEnumerable<LM.Models.LM.TechArea>
 
 @{
     ViewData["Title"] = "Index";
 }
 
+
 <div class="body">
     <ol class="breadcrumb breadcrumb-bg-pink">
         <li><a asp-controller="Dashboard" asp-action="Index"><i class="material-icons">home</i> Dashboard</a></li>
-        <li class="active"> Departments</li>
+        <li class="active"> Tech Areas</li>
     </ol>
 </div>
 
@@ -18,7 +19,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    LIST OF DEPARTMENTS
+                    LIST OF SOFTWARE TYPES
                 </h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
@@ -38,24 +39,28 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>DEPARTMENT NAME</th>
+                            <th>TECH AREA</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var d in Model)
+                        @{ 
+                            int count = 1;
+                        }
+                        @foreach (var t in Model)
                         {
-                        <tr>
-                            <th scope="row">@d.DepartmentId</th>
-                            <td>@d.Name</td>
-                            <td>
-                                <div class="btn-group" role="group">
-                                    <a asp-action="Edit" asp-route-id="@d.DepartmentId" class="btn btn-warning">Edit</a>
-                                    <a asp-action="Details" asp-route-id="@d.DepartmentId" class="btn btn-info">Details</a>
-                                    <a asp-action="Delete" asp-route-id="@d.DepartmentId" class="btn btn-danger">Delete</a>
-                                 </div>
-                            </td>
-                        </tr>
+
+                            <tr>
+                                <th scope="row">@(count++)</th>
+                                <td>@t.Name</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Edit" asp-route-id="@t.TechAreaId" class="btn btn-warning">Edit</a>
+                                        <a asp-action="Details" asp-route-id="@t.TechAreaId" class="btn btn-info">Details</a>
+                                        <a asp-action="Delete" asp-route-id="@t.TechAreaId" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -63,5 +68,4 @@
         </div>
     </div>
 </div>
-
 <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary"> Back</a>

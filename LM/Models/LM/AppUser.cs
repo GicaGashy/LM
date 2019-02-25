@@ -10,6 +10,7 @@ namespace LM.Models.LM
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        
 
         //relationship stuff
 

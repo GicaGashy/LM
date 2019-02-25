@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using LM.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using LM.Models.LM;
 
 namespace LM
 {

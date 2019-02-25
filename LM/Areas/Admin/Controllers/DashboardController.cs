@@ -7,9 +7,12 @@ using LM.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LM.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
+    [Area("Admin")]
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,9 +29,11 @@ namespace LM.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var vm = new DashboardViewModel();
-            vm.Departments = _context.Departments.ToList();
-            vm.AppUsers = _userManager.Users.ToList();
-            vm.Teams = _context.Teams.ToList();
+            vm.Departments = _context.Departments.AsNoTracking().ToList();
+            vm.AppUsers = _userManager.Users.AsNoTracking().ToList();
+            vm.Teams = _context.Teams.AsNoTracking().ToList();
+            vm.Tipis = _context.Tipies.AsNoTracking().ToList();
+            vm.TechAreas = _context.TechAreas.AsNoTracking().ToList();
             return View(vm);
         }
     }
