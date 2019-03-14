@@ -53,21 +53,28 @@
                         @foreach (var u in Model.AppUsers)
                         {
 
-                            <tr>
-                                <th scope="row">@(count++)</th>
-                                <td>@u.FirstName</td>
-                                <td>@u.LastName</td>
-                                <td>@u.Email</td>
-                                <td>@u.UserName</td>
+                        <tr>
+                            <th scope="row">@(count++)</th>
+                            <td>@u.FirstName</td>
+                            <td>@u.LastName</td>
+                            <td>@u.Email</td>
+                            <td>@u.UserName</td>
+                            @if (u.Team == null)
+                            {
+                                <td>n/a</td>
+                            }
+                            else
+                            {
                                 <td>@u.Team.Name</td>
-                                <td>
-                                    <div class="btn-group" role="group">
-                                        <a asp-action="Edit" asp-route-id="@u.Id" class="btn btn-warning">Edit</a>
-                                        <a asp-action="Details" asp-route-id="@u.Id" class="btn btn-info">Details</a>
-                                        <a asp-action="Delete" asp-route-id="@u.Id" class="btn btn-danger">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
+                            }
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Edit" asp-route-id="@u.Id" class="btn btn-warning">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@u.Id" class="btn btn-info">Details</a>
+                                    <a asp-action="Delete" asp-route-id="@u.Id" class="btn btn-danger">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

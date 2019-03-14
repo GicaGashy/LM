@@ -11,7 +11,6 @@ namespace LM.Data
     public class SeedData
     {
 
-
         public static void Seed(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             SeedRoles(roleManager);

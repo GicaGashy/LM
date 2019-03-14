@@ -1,0 +1,170 @@
+﻿@model LM.Models.LM.Software
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="body">
+    <ol class="breadcrumb breadcrumb-bg-cyan">
+        <li><a asp-controller="Dashboard" asp-action="Index"><i class="material-icons">home</i> Dashboard</a></li>
+        <li><a asp-action="Index"> Softwares</a></li>
+        <li class="active">Details (@Model.Name)</li>
+    </ol>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+        <div class="header bg-green">
+            <h2>
+                @Model.Name
+
+
+            </h2>
+            <ul class="header-dropdown m-r-0">
+                <li>
+                    <a href="javascript:void(0);">
+                        <i class="material-icons">info_outline</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                        <i class="material-icons">help_outline</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="body">
+            <div class="row clearfix">
+                <div class="col-xs-12 ol-sm-12 col-md-12 col-lg-12">
+                    <div class="panel-group" id="accordion_19" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-col-pink">
+                            <div class="panel-heading" role="tab" id="headingOne_19">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" href="#collapseOne_19" aria-expanded="true" aria-controls="collapseOne_19">
+                                        Name
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne_19">
+                                <div class="panel-body">
+                                    @Model.Name
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-col-cyan">
+                            <div class="panel-heading" role="tab" id="headingTwo_19">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseTwo_19" aria-expanded="true" aria-controls="collapseTwo_19">
+                                        Version
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo_19">
+                                <div class="panel-body">
+                                    @Model.Version
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-col-teal">
+                            <div class="panel-heading" role="tab" id="headingThree_19">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseThree_19" aria-expanded="true" aria-controls="collapseThree_19">
+                                        License Info
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree_19">
+                                <div class="panel-body">
+                                    <p><b>Start: </b>@Model.LicenseStart.Value.ToShortDateString()</p>
+                                    <p><b>End:</b> @Model.LicenseEnd.Value.ToShortDateString()</p>
+                                    <p><b>Days left:</b> @Model.DaysLeft()</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-col-orange">
+                            <div class="panel-heading" role="tab" id="headingFour_19">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseFour_19" aria-expanded="true" aria-controls="collapseFour_19">
+                                        Use Cases
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFour_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour_19">
+                                <div class="panel-body">
+                                    @Model.UseCases
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-col-blue">
+                            <div class="panel-heading" role="tab" id="headingFive_19">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseFive_19" aria-expanded="true" aria-controls="collapseFive_19">
+                                        Description
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFive_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive_19">
+                                <div class="panel-body">
+                                    @Model.Description
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-col-amber">
+                            <div class="panel-heading" role="tab" id="headingSix_19">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseSix_19" aria-expanded="true" aria-controls="collapseSix_19">
+                                        Tech Area
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseSix_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSix_19">
+                                <div class="panel-body">
+                                    @Model.TechArea.Name
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-col-lime">
+                            <div class="panel-heading" role="tab" id="headingSeven_19">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseSeven_19" aria-expanded="true" aria-controls="collapseSeven_19">
+                                        Type
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseSeven_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven_19">
+                                <div class="panel-body">
+                                    @Model.Tipi.Name
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-col-black">
+                            <div class="panel-heading" role="tab" id="headingEight_19">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseEight_19" aria-expanded="true" aria-controls="collapseEight_19">
+                                        Teams that Use it:
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseEight_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingEight_19">
+                                <div class="panel-body">
+                                    @{ 
+                                        @foreach(var t in Model.Teams)
+                                        {
+                                            <p>@t.Name</p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="btn-group" role="group">
+    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.SoftwareId">Edit</a>
+    <a class="btn btn-info" asp-action="Index">Back to List</a>
+</div>

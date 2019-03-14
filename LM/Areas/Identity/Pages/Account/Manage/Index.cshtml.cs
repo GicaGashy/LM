@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using LM.Models.LM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +13,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace LM.Areas.Identity.Pages.Account.Manage
 {
+    [Authorize(Roles = "Admin")]
+    [Area("Admin")]
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -48,6 +52,7 @@ namespace LM.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -73,6 +78,7 @@ namespace LM.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -112,7 +118,8 @@ namespace LM.Areas.Identity.Pages.Account.Manage
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
-
+        [Area("Identity")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> OnPostSendVerificationEmailAsync()
         {
             if (!ModelState.IsValid)

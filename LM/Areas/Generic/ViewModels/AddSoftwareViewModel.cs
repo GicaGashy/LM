@@ -1,13 +1,13 @@
-﻿using System;
+﻿using LM.Models.LM;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LM.Models.LM
+namespace LM.Areas.Generic.ViewModels
 {
-    public class Software
+    public class AddSoftwareViewModel
     {
         public int SoftwareId { get; set; }
         [Required]
@@ -15,10 +15,8 @@ namespace LM.Models.LM
 
         public string Version { get; set; }
 
-        public string Producer { get; set; }
-
         [Required]
-        [Display(Name = "LicenseStart")]
+        [Display (Name = "LicenseStart")]
         public DateTime? LicenseStart { get; set; }
 
         [Display(Name = "LicenseEnd")]
@@ -35,7 +33,7 @@ namespace LM.Models.LM
 
         //relationship with type
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Please select a correct type from the list")]
+        [Range(1, int.MaxValue, ErrorMessage ="Please select a correct type from the list")]
         public int TipiId { get; set; }
         public Tipi Tipi { get; set; }
 
@@ -45,17 +43,6 @@ namespace LM.Models.LM
 
         //relationship with SoftwareTeam
         public List<SoftwareTeam> SoftwareTeams { get; set; }
-        public ICollection<Team> Teams { get; set; }
-        [NotMapped]
-        public ICollection<int> TeamIds { get; set; }
-
-        public double DaysLeft()
-        {
-            DateTime now = DateTime.Now;
-            TimeSpan difference = (TimeSpan)(LicenseEnd - LicenseStart);
-            TimeSpan daysPassed = (TimeSpan)(now - LicenseStart);
-            return Math.Ceiling(difference.TotalDays - daysPassed.TotalDays);
-        }
-
+        public Team[] Teams { get; set; }
     }
 }

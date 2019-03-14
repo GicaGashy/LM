@@ -18,6 +18,13 @@ namespace LM.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Department>().HasData(new Department
+            {
+                DepartmentId = 1,
+                Name = "Infrastructure",
+                Description = "Infrastructure stuff"
+            });
+
             builder.Entity<SoftwareTeam>()
                 .HasKey(t => new { t.SoftwareId, t.TeamId} );
 
@@ -30,6 +37,10 @@ namespace LM.Data
                 .HasOne(t => t.Team)
                 .WithMany(st => st.SoftwareTeams)
                 .HasForeignKey(t => t.TeamId);
+
+
+
+
         }
 
         public DbSet<Department> Departments { get; set; }

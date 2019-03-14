@@ -1,0 +1,50 @@
+﻿@model LM.Areas.Generic.ViewModels.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="body">
+    <ol class="breadcrumb breadcrumb-bg-cyan">
+        <li><a asp-controller="Dashboard" asp-action="Index"><i class="material-icons">home</i> Dashboard</a></li>
+        <li class="active"> User Profile</li>
+    </ol>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    @(Model.AppUser.FirstName.ToUpper() + " " + Model.AppUser.LastName.ToUpper() )
+                    <small>See your profile data</small>
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);">Action</a></li>
+                            <li><a href="javascript:void(0);">Another action</a></li>
+                            <li><a href="javascript:void(0);">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <p class="">Name: <span class="col-brown">@Model.AppUser.FirstName</span></p>
+                <p class="">Surname: <span class="col-brown">@Model.AppUser.LastName</span></p>
+                <p class="">Email: <span class="col-brown">@Model.AppUser.Email</span></p>
+                <p class="">Username: <span class="col-brown">@Model.AppUser.UserName</span></p>
+                <p class="">Phone: <span class="col-brown">@Model.AppUser.PhoneNumber</span></p>
+                <p class="">Team: <span class="col-brown">@Model.AppUser.Team.Name</span></p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-success">Back to List</a>
+</div>

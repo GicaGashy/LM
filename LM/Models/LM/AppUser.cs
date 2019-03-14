@@ -18,5 +18,10 @@ namespace LM.Models.LM
         public int? TeamId { get; set; }
         public Team Team { get; set; }
 
+
+        public String GetFullName()
+        {
+            return this.FirstName + " " + this.LastName;
+        }
     }
 }

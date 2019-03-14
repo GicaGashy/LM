@@ -4,14 +4,16 @@ using LM.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LM.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190307153018_CkaPoDiUne")]
+    partial class CkaPoDiUne
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,16 +51,11 @@ namespace LM.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<DateTime?>("LicenseEnd")
-                        .IsRequired();
+                    b.Property<DateTime>("LicenseEnd");
 
-                    b.Property<DateTime?>("LicenseStart")
-                        .IsRequired();
+                    b.Property<DateTime>("LicenseStart");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<string>("Producer");
+                    b.Property<string>("Name");
 
                     b.Property<int>("TechAreaId");
 

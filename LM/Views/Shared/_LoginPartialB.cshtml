@@ -1,0 +1,48 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<LM.Models.LM.AppUser> SignInManager
+@inject UserManager<LM.Models.LM.AppUser> UserManager
+
+<div class="user-info">
+    <div class="image">
+        <img src="images/user.png" width="48" height="48" alt="User" />
+    </div>
+    <div class="info-container">
+        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
+        <div class="email">Hello @User.Identity.Name</div>
+        <div class="btn-group user-helper-dropdown">
+            <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+            @if (SignInManager.IsSignedIn(User))
+            {
+            <ul class="dropdown-menu pull-right">
+                <li>
+                    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="material-icons">person</i>Profile</a>
+                </li>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <li>
+                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" title="Manage"><i class="material-icons">assessment</i>Admin Dashboard</a>
+                    </li>
+                }
+                <li>
+                    <a asp-area="Generic" asp-controller="Dashboard" asp-action="Index" title="Manage"><i class="material-icons">assessment</i> Dashboard</a>
+                </li>
+                <li role="separator" class="divider"></li>
+
+                <li>
+                    <button type="button" class="btn btn-link waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal" data-color="purple"><i class="material-icons">input</i> Logout</button>
+                </li>
+            </ul>
+            }
+            else
+            {
+                <ul class="dropdown-menu pull-right">
+
+                    <li><a asp-area="Identity" asp-page="/Account/Login"><i class="material-icons">input</i>Login</a></li>
+
+                </ul>
+            }
+
+        </div>
+    </div>
+</div>
