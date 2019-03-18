@@ -83,8 +83,12 @@ namespace LM.Areas.Admin.Controllers
 
                     techArea.Image = FileName;
                 }
+                else
+                {
+                    techArea.Image = "def.jpg";
+                }
 
-                techArea.Image = "def.jpg";
+                
                 _context.Add(techArea);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
