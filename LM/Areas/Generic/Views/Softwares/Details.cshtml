@@ -1,4 +1,4 @@
-﻿@model LM.Models.LM.Software
+﻿@model LM.Areas.Generic.ViewModels.DetailsVM
 
 @{
     ViewData["Title"] = "Details";
@@ -8,7 +8,7 @@
     <ol class="breadcrumb breadcrumb-bg-cyan">
         <li><a asp-controller="Dashboard" asp-action="Index"><i class="material-icons">home</i> Dashboard</a></li>
         <li><a asp-action="Index"> Softwares</a></li>
-        <li class="active">Details (@Model.Name)</li>
+        <li class="active">Details (@Model.Software.Name)</li>
     </ol>
 </div>
 
@@ -16,8 +16,7 @@
     <div class="card">
         <div class="header bg-green">
             <h2>
-                @Model.Name
-
+                @Model.Software.Name
 
             </h2>
             <ul class="header-dropdown m-r-0">
@@ -37,6 +36,33 @@
             <div class="row clearfix">
                 <div class="col-xs-12 ol-sm-12 col-md-12 col-lg-12">
                     <div class="panel-group" id="accordion_19" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-col-brown">
+                            <div class="panel-heading" role="tab" id="headingZero_19">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" href="#collapseZero_19" aria-expanded="true" aria-controls="collapseZero_19">
+                                        Owners
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne_19">
+                                <div class="panel-body">
+                                    <span class="font-bold">IT Owner Team:  </span><span>@Model.Software.ItOwner.Name </span><br />
+                                    <span class="font-bold">IT Owner:  </span><span>@Model.Software.ItOwnerName </span><br />
+                                    <span class="font-bold">Business Owners:  </span>
+                                    <ul>
+                                        @foreach (var team in Model.Software.BusinessOwnerTeams)
+                                        {
+                                            <li>@team.Name</li>
+                                        }
+                                    </ul>
+                                    
+                                    <span class="font-bold">Purpose For:  </span><span>@Model.Software.Purpose.Name </span>
+                                    <h5>Used: <span class="label bg-@(Model.Software.IsUsed? "green": "deep-orange")">@(Model.Software.IsUsed ? "YES" : "NO" )</span> </h5>
+                                    <h5>Intenet Facing: <span class="label bg-@(Model.Software.IsInternetFacing? "green": "deep-orange")">@(Model.Software.IsInternetFacing ? "YES" : "NO" )</span> </h5>
+                                    <h5>Mobile: <span class="label bg-@(Model.Software.IsMobile? "green": "deep-orange")">@(Model.Software.IsMobile ? "YES" : "NO" )</span> </h5>
+                                </div>
+                            </div>
+                        </div>
                         <div class="panel panel-col-pink">
                             <div class="panel-heading" role="tab" id="headingOne_19">
                                 <h4 class="panel-title">
@@ -47,7 +73,7 @@
                             </div>
                             <div id="collapseOne_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne_19">
                                 <div class="panel-body">
-                                    @Model.Name
+                                    @Model.Software.Name
                                 </div>
                             </div>
                         </div>
@@ -61,7 +87,7 @@
                             </div>
                             <div id="collapseTwo_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo_19">
                                 <div class="panel-body">
-                                    @Model.Version
+                                    @Model.Software.Version
                                 </div>
                             </div>
                         </div>
@@ -75,10 +101,10 @@
                             </div>
                             <div id="collapseThree_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree_19">
                                 <div class="panel-body">
-                                    <p><b>Start: </b>@Model.LicenseStart.Value.ToShortDateString()</p>
-                                    <p><b>End:</b> @Model.LicenseEnd.Value.ToShortDateString()</p>
-                                    <p><b>Days left:</b> @Model.DaysLeft()</p>
-
+                                    <p><b>Start: </b>@Model.Software.LicenseStart.Value.ToShortDateString()</p>
+                                    <p><b>End:</b> @Model.Software.LicenseEnd.Value.ToShortDateString()</p>
+                                    <p><b>Days left:</b> @Math.Floor(Model.Software.DaysLeft())</p>
+                                    <p><b>Total Licenses:</b> @Model.Software.LicensesInUse / @Model.Software.TotalLicenses</p>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +118,7 @@
                             </div>
                             <div id="collapseFour_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour_19">
                                 <div class="panel-body">
-                                    @Model.UseCases
+                                    @Model.Software.UseCases
                                 </div>
                             </div>
                         </div>
@@ -106,7 +132,7 @@
                             </div>
                             <div id="collapseFive_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive_19">
                                 <div class="panel-body">
-                                    @Model.Description
+                                    @Model.Software.Description
                                 </div>
                             </div>
                         </div>
@@ -120,7 +146,7 @@
                             </div>
                             <div id="collapseSix_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSix_19">
                                 <div class="panel-body">
-                                    @Model.TechArea.Name
+                                    @Model.Software.TechArea.Name
                                 </div>
                             </div>
                         </div>
@@ -134,7 +160,7 @@
                             </div>
                             <div id="collapseSeven_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven_19">
                                 <div class="panel-body">
-                                    @Model.Tipi.Name
+                                    @Model.Software.Tipi.Name
                                 </div>
                             </div>
                         </div>
@@ -148,8 +174,8 @@
                             </div>
                             <div id="collapseEight_19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingEight_19">
                                 <div class="panel-body">
-                                    @{ 
-                                        @foreach(var t in Model.Teams)
+                                    @{
+                                        @foreach (var t in Model.Software.Teams)
                                         {
                                             <p>@t.Name</p>
                                         }
@@ -165,6 +191,6 @@
 </div>
 
 <div class="btn-group" role="group">
-    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.SoftwareId">Edit</a>
+    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Software.SoftwareId">Edit</a>
     <a class="btn btn-info" asp-action="Index">Back to List</a>
 </div>

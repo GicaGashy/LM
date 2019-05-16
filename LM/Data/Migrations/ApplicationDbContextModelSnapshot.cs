@@ -39,6 +39,38 @@ namespace LM.Data.Migrations
                     );
                 });
 
+            modelBuilder.Entity("LM.Models.LM.Purpose", b =>
+                {
+                    b.Property<int>("PurposeId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("PurposeId");
+
+                    b.ToTable("Purposes");
+                });
+
+            modelBuilder.Entity("LM.Models.LM.Reseller", b =>
+                {
+                    b.Property<int>("ResellerId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Country");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("ResellerId");
+
+                    b.ToTable("Reseller");
+                });
+
             modelBuilder.Entity("LM.Models.LM.Software", b =>
                 {
                     b.Property<int>("SoftwareId")
@@ -47,24 +79,53 @@ namespace LM.Data.Migrations
 
                     b.Property<string>("AppUserId");
 
+                    b.Property<int>("Availability");
+
+                    b.Property<int>("Confidentiality");
+
                     b.Property<string>("Description");
 
-                    b.Property<DateTime?>("LicenseEnd")
-                        .IsRequired();
+                    b.Property<int>("Integrity");
 
-                    b.Property<DateTime?>("LicenseStart")
-                        .IsRequired();
+                    b.Property<bool>("IsInternetFacing");
+
+                    b.Property<bool>("IsMobile");
+
+                    b.Property<bool>("IsUsed");
+
+                    b.Property<string>("ItOwnerName")
+                        .HasMaxLength(255);
+
+                    b.Property<int?>("ItOwnerTeamId");
+
+                    b.Property<DateTime?>("LicenseEnd");
+
+                    b.Property<DateTime?>("LicenseStart");
+
+                    b.Property<int?>("LicensesInUse");
 
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<string>("Producer");
+                    b.Property<int>("PurposeId");
+
+                    b.Property<int?>("ResellerId");
+
+                    b.Property<DateTime?>("Review");
+
+                    b.Property<DateTime?>("Standardized");
 
                     b.Property<int>("TechAreaId");
 
                     b.Property<int>("TipiId");
 
+                    b.Property<int?>("TotalLicenses");
+
+                    b.Property<int>("Traceability");
+
                     b.Property<string>("UseCases");
+
+                    b.Property<string>("Vendor");
 
                     b.Property<string>("Version");
 
@@ -72,11 +133,30 @@ namespace LM.Data.Migrations
 
                     b.HasIndex("AppUserId");
 
+                    b.HasIndex("ItOwnerTeamId");
+
+                    b.HasIndex("PurposeId");
+
+                    b.HasIndex("ResellerId");
+
                     b.HasIndex("TechAreaId");
 
                     b.HasIndex("TipiId");
 
                     b.ToTable("Softwares");
+                });
+
+            modelBuilder.Entity("LM.Models.LM.SoftwareBusinessOwnerTeam", b =>
+                {
+                    b.Property<int>("SoftwareId");
+
+                    b.Property<int>("BusinessOwnerTeamId");
+
+                    b.HasKey("SoftwareId", "BusinessOwnerTeamId");
+
+                    b.HasIndex("BusinessOwnerTeamId");
+
+                    b.ToTable("SoftwareBusinessOwnerTeams");
                 });
 
             modelBuilder.Entity("LM.Models.LM.SoftwareTeam", b =>
@@ -341,6 +421,19 @@ namespace LM.Data.Migrations
                         .WithMany()
                         .HasForeignKey("AppUserId");
 
+                    b.HasOne("LM.Models.LM.Team", "ItOwner")
+                        .WithMany("ItSoftwares")
+                        .HasForeignKey("ItOwnerTeamId");
+
+                    b.HasOne("LM.Models.LM.Purpose", "Purpose")
+                        .WithMany()
+                        .HasForeignKey("PurposeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LM.Models.LM.Reseller", "Reseller")
+                        .WithMany()
+                        .HasForeignKey("ResellerId");
+
                     b.HasOne("LM.Models.LM.TechArea", "TechArea")
                         .WithMany()
                         .HasForeignKey("TechAreaId")
@@ -349,6 +442,19 @@ namespace LM.Data.Migrations
                     b.HasOne("LM.Models.LM.Tipi", "Tipi")
                         .WithMany()
                         .HasForeignKey("TipiId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("LM.Models.LM.SoftwareBusinessOwnerTeam", b =>
+                {
+                    b.HasOne("LM.Models.LM.Team", "BusinessOwnerTeam")
+                        .WithMany("SoftwareBusinessOwnerTeams")
+                        .HasForeignKey("BusinessOwnerTeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LM.Models.LM.Software", "Software")
+                        .WithMany("SoftwareBusinessOwnerTeams")
+                        .HasForeignKey("SoftwareId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

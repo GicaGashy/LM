@@ -1,4 +1,4 @@
-﻿@model LM.Models.LM.Software
+﻿@model LM.Areas.Generic.ViewModels.CreateVM;
 
 @{
     ViewData["Title"] = "Create";
@@ -7,18 +7,18 @@
 <div class="body">
     <ol class="breadcrumb breadcrumb-bg-cyan">
         <li><a asp-controller="Dashboard" asp-action="Index"><i class="material-icons">home</i> Dashboard</a></li>
-        <li><a asp-action="Index"> @(Model.GetType().Name + "s")</a></li>
+        <li><a asp-action="Index"> @(Model.Software.GetType().Name + "s")</a></li>
         <li class="active">Create</li>
     </ol>
 </div>
 
 <!-- Input -->
-<div class="row clearfix">
+<div class="row clearfix"  id="vueTarget">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="header">
                 <h2>
-                    ADD A NEW @Model.GetType().Name.ToUpper()
+                    ADD A NEW @Model.Software.GetType().Name.ToUpper()
                     <small>Fill the details of the @Model.GetType().Name.ToLower()</small>
 
                 </h2>
@@ -36,81 +36,533 @@
                 </ul>
             </div>
             <div class="body">
-                <div class="row clearfix">
-                    <div class="col-sm-6">
-                        <form asp-action="Create">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-sm-12">
                             <div class="form-group">
-                                <div class="form-line">
-                                    <span asp-validation-for="Name" class="text-danger"></span>
-                                    <label asp-for="Name" class="control-label"></label>
-                                    <input asp-for="Name" class="form-control" placeholder="Software name" />
+                                <div class="col-sm-6 m-l--10">
+                                    <div class="form-line">
+                                        <label asp-for="Software.Name" class="control-label"></label><br />
+                                        <span asp-validation-for="Software.Name" class="col-deep-orange"></span>
+                                        <input asp-for="Software.Name" class="form-control" placeholder="Software name" />
+                                    </div>
+
+                                    <div class="form-line m-t-50">
+                                        <span asp-validation-for="Software.Version" class="text-danger"></span>
+                                        <label asp-for="Software.Version" class="control-label"></label>
+                                        <input asp-for="Software.Version" class="form-control" placeholder="Version (eg. 1.02)" />
+                                    </div>
+
+                                    <div class="form-line m-t-50">
+                                        <span asp-validation-for="Software.Vendor" class="text-danger"></span>
+                                        <label asp-for="Software.Vendor" class="control-label"></label>
+                                        <input asp-for="Software.Vendor" class="form-control" placeholder="Vendor (eg. Microsoft)" />
+                                    </div>
+
+                                    <div class="m-t-50">
+                                        <h5>License Info</h5>
+                                        <div class="switch">
+                                            <label>NO<input type="checkbox" name="LicenseInfo" value="true" v-model="licenseInfo"><span class="lever switch-col-black m-r-100"></span>YES</label>
+                                            <span v-if="licenseInfo == false" class="m-l-100 font-14 text-capitalize col-black">SOFTWARE WILL HAVE DEAFULT LICENSE INFO</span>
+                                            <span v-else class="m-l-100 font-14 text-capitalize font-bold col-black">WRITE DOWN LICENSE START AND END DATE</span>
+                                        </div>
+                                    </div>
+                                    @*
+        <button type="button" v-on:click="addCom()" class="btn btn-sm bg-purple">Add New</button>
+
+        <div>
+            <user-name v-for="com in coms">
+                <component :is="com" :key="com.name"></component>
+            </user-name>
+        </div>
+                                    *@
+                                    <div class="form-line m-t-50">
+                                        <span asp-validation-for="Software.LicenseStart" class="text-danger"></span>
+                                        <label asp-for="Software.LicenseStart" class="control-label">Start of License Date</label><span v-if="!licenseInfo" class="col-amber"> (Disabled, it will have defautl value)</span>
+                                        <input v-bind:disabled="licenseInfo == false" asp-for="Software.LicenseStart" class="form-control" type="date" placeholder="" />
+                                    </div>
+
+                                    <div class="form-line m-t-50">
+                                        <span asp-validation-for="Software.LicenseEnd" class="text-danger"></span>
+                                        <label asp-for="Software.LicenseEnd" class="control-label">End of License Date</label><span v-if="!licenseInfo" class="col-amber"> (Disabled, it will have default value)</span>
+                                        <input v-bind:disabled="licenseInfo == false" asp-for="Software.LicenseEnd" class="form-control" type="date" placeholder="" />
+
+                                    </div>
+
+                                    <!-- Number of Licenses - START -->
+                                    <div class="row clearfix m-t-100">
+                                        <div class="col-md-6">
+                                            <div class="input-group spinner" data-trigger="spinner">
+                                                <div class="form-line">
+                                                    <span asp-validation-for="Software.TotalLicenses" class="text-danger"></span>
+                                                    <label asp-for="Software.TotalLicenses" class="control-label">Total Licenses</label>
+                                                    <input type="text" asp-for="Software.TotalLicenses" class="form-control text-center" data-rule="quantity" v-model="totalLicenses">
+                                                </div>
+                                                <span class="input-group-addon">
+                                                    <button type="button" class="btn bg-cyan g-button-w25" v-on:click="totalLicenses++ ;checkZero()">+</button><br />
+                                                    <button type="button" class="btn bg-deep-orange g-button-w25" v-on:click="totalLicenses--; checkZero()">-</button>
+
+                                                    @*
+                        <a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                        <a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                                                    *@
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="input-group spinner" data-trigger="spinner">
+                                                <div class="form-line">
+                                                    <span asp-validation-for="Software.LicensesInUse" class="text-danger"></span>
+                                                    <label asp-for="Software.LicensesInUse" class="control-label">Licenses in Use:</label>
+                                                    <input type="text" asp-for="Software.LicensesInUse" class="form-control text-center" data-rule="quantity" v-model="licensesInUse">
+                                                </div>
+                                                <span class="input-group-addon">
+                                                    <button type="button" class="btn bg-cyan g-button-w25" v-on:click="licensesInUse++; checkZero()">+</button><br />
+                                                    <button type="button" class="btn bg-deep-orange g-button-w25" v-on:click="licensesInUse--; checkZero()">-</button>
+                                                    @*
+                        <a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                        <a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                                                    *@
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-md-12 align-center">
+                                                <div class="form-inline">
+                                                    <h5>Licenses: {{licensesInUse + " / " + totalLicenses }} </h5>
+                                                    <span class="badge bg-pink">{{percentageUse(licensesInUse, totalLicenses)}}</span>
+                                                    <h6 class="col-deep-orange">{{licenseMessage}} </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Number of Licenses - END -->
+                                    <div class="form-line m-t-50">
+                                        <span asp-validation-for="Software.Description" class="text-danger"></span>
+                                        <label asp-for="Software.Description" class="control-label"></label>
+                                        <textarea asp-for="Software.Description" rows="4" class="form-control no-resize" placeholder="Describe the software"></textarea>
+                                    </div>
+
+                                    <div class="form-line m-t-50">
+                                        <span asp-validation-for="Software.UseCases" class="text-danger"></span>
+                                        <label asp-for="Software.UseCases" class="control-label">Use Cases</label>
+                                        <textarea asp-for="Software.UseCases" rows="4" class="form-control no-resize" placeholder="List the use cases of this software"></textarea>
+                                    </div>
+
+                                    <div class="form-line m-t-50">
+                                        <label asp-for="Software.TechAreaId" class="control-label">Teach Area (eg. Network)</label><br />
+                                        <span asp-validation-for="Software.TechAreaId" class="col-deep-orange"></span>
+                                        <select asp-for="Software.TechAreaId" class="form-control show-tick" data-live-search="true" asp-items="ViewBag.TechAreaId">
+                                            <option selected disabled>Select a tech area </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-line m-t-50">
+                                        <label asp-for="Software.TipiId" class="control-label">Type (eg. OS)</label>)<br />
+                                        <span asp-validation-for="Software.TipiId" class="col-deep-orange"></span>
+                                        <select asp-for="Software.TipiId" class="form-control show-tick" data-live-search="true" asp-items="ViewBag.TipiId">
+                                            <option selected disabled>Select a tech area </option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="form-line m-t-50">
+                                        <label asp-for="Software.Teams" class="control-label">Select all teams that will be using this software</label>
+                                        <select multiple name="teams" class="form-control show-tick" data-live-search="true" asp-items="ViewBag.TeamId">
+                                            <option disabled>Select teams</option>
+                                            <option value="-1">All</option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="form-line m-t-50">
-                                    <span asp-validation-for="Version" class="text-danger"></span>
-                                    <label asp-for="Version" class="control-label"></label>
-                                    <input asp-for="Version" class="form-control" placeholder="Version (eg. 1.02)" />
+
+
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12 p-b-50">
+                                            <h4 class="g-border-bottom p-b-10">Ownership and Other Stuff</h4>
+                                            <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 p-r-50 m-r-50">
+                                                <div class="form-line m-t-50">
+                                                    <label asp-for="Software.ItOwnerName" class="control-label">It Owner Name</label><br />
+                                                    <span asp-validation-for="Software.ItOwnerName" class="col-deep-orange"></span>
+                                                    <input type="text" asp-for="Software.ItOwnerName" class="form-control" placeholder="e.g. Filon Fisteku" />
+                                                </div>
+                                                <div class="form-line m-t-50">
+                                                    <label asp-for="Software.ItOwnerId" class="control-label">Select an IT Owner</label><br />
+                                                    <span asp-validation-for="Software.ItOwnerId" class="col-deep-orange"></span>
+                                                    <select asp-for="Software.ItOwnerId" class="form-control show-tick" data-live-search="true" asp-items="ViewBag.ItOwnerId">
+                                                        <option selected disabled>Pick a team</option>
+                                                    </select>
+                                                </div>
+
+
+
+                                                <div class="form-line m-t-50">
+                                                    <label asp-for="Software.BusinessOwnerTeams" class="control-label">Select Business Owners of this software</label>
+                                                    <select multiple name="businessTeams" class="form-control show-tick" data-live-search="true" asp-items="ViewBag.BusinessOwnerTeamId">
+                                                        <option disabled>Select teams</option>
+                                                        <option value="-1">All</option>
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="form-line m-t-50">
+                                                    <label asp-for="Software.PurposeId" class="control-label">Purpose for:</label><br />
+                                                    <span asp-validation-for="Software.PurposeId" class="col-deep-orange"></span>
+                                                    <select asp-for="Software.PurposeId" class="form-control show-tick" data-live-search="true" asp-items="ViewBag.PurposeId">
+                                                        <option selected disabled>Choose audience</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 m-t-50">
+                                                <div class="row">
+                                                    <h5><u>USAGE</u></h5>
+                                                    <div class="switch">
+                                                        <label>NO<input asp-for="Software.IsUsed" type="checkbox" v-model="isUsed"><span class="lever switch-col-purple m-r-100"></span>YES</label>
+                                                        <span v-if="isUsed" class="m-l-100 font-14 text-capitalize font-bold col-purple">SOFTWARE IS CURRENTLY IN USE</span>
+                                                        <span v-else class="m-l-100 font-14 text-capitalize col-grey">SOFTWARE CURRENTLY <u>NOT</u> IN USE</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row m-t-20">
+                                                    <h5><u>INTERNET FACING</u></h5>
+                                                    <div class="switch">
+                                                        <label>NO<input asp-for="Software.IsInternetFacing" type="checkbox" v-model="isInternetFacing"><span class="lever switch-col-light-blue m-r-100"></span>YES</label>
+                                                        <span v-if="isInternetFacing" class="m-l-100 font-14 text-capitalize font-bold col-light-blue">SOFTWARE FACES THE INTERNET</span>
+                                                        <span v-else class="m-l-100 font-14 text-capitalize col-grey">SOFTWARE IS CONFINED </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row m-t-20">
+                                                    <h5><u>MOBILE APPLICATION</u></h5>
+                                                    <div class="switch">
+                                                        <label>NO<input asp-for="Software.IsMobile" type="checkbox" v-model="isMobile"><span class="lever switch-col-light-green m-r-100"></span>YES</label>
+                                                        <span v-if="isMobile" class="m-l-100 font-14 text-capitalize font-bold col-light-green">SOFTWARE IS USED IN MOBILE/TABLET</span>
+                                                        <span v-else class="m-l-100 font-14 text-capitalize col-grey">SOFTWARE IS <u>NOT</u> USED IN MOBILE/TABLET</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row m-t-20">
+                                                        <h5 class="col-deep-orange">If the reseller is not on the list, please type it on the Reseller's Box</h5>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-line m-t-50">
+                                                            <label asp-for="Software.ResellerId" class="control-label">Reseller</label><br />
+                                                            <span asp-validation-for="Software.ResellerId" class="col-deep-orange"></span>
+                                                            <select asp-for="Software.ResellerId" class="form-control show-tick" data-live-search="true" asp-items="ViewBag.ResellerId">
+                                                                <option selected disabled value="-1">Select a reseller from the list</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-line m-t-50">
+                                                            <label for="ResellerBox" class="control-label">Reseller's name</label>
+                                                            <input type="text" name="ResellerBox" id="ResellerBox" class="form-control" placeholder="E.g. Comtrade"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="form-line m-t-50">
-                                    <span asp-validation-for="Producer" class="text-danger"></span>
-                                    <label asp-for="Producer" class="control-label"></label>
-                                    <input asp-for="Producer" class="form-control" placeholder="Producer (eg. Microsoft)" />
-                                </div>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12 g-border-bottom p-b-50">
+                                            <h4 class="g-border-bottom p-b-10">Software Matrix <small>(Leave blank if you have no information)</small></h4>
+                                            <div class="row p-t-30">
+                                                <div class="col-lg-8">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>CRITERIA / SCORE</th>
+                                                                <th>LOW / S1</th>
+                                                                <th>MODERATE / S2</th>
+                                                                <th>SERIOUS / S3</th>
+                                                                <th>EXTREME / S4</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="font-bold col-red font-12">CONFIDENTIALITY</td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Confidentiality == 1)
+                                                                        {
+                                                                            <input asp-for="Software.Confidentiality" value="1" type="radio" id="c1" class="radio-col-red" v-model="cChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Confidentiality" value="1" type="radio" id="c1" class="radio-col-red" v-model="cChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="cChecked == 1" for="c1" class="col-red font-underline">Public</label>
+                                                                    <label v-else for="c1" class="">Public</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Confidentiality == 2)
+                                                                        {
+                                                                            <input asp-for="Software.Confidentiality" value="2" type="radio" id="c2" class="radio-col-red" v-model="cChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Confidentiality" value="2" type="radio" id="c2" class="radio-col-red" v-model="cChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="cChecked==2" for="c2" class="col-red font-underline">Restricted</label>
+                                                                    <label v-else for="c2" class="">Restricted</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Confidentiality == 3)
+                                                                        {
+                                                                            <input asp-for="Software.Confidentiality" value="3" type="radio" id="c3" class="radio-col-red" v-model="cChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Confidentiality" value="3" type="radio" id="c3" class="radio-col-red" v-model="cChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="cChecked == 3" for="c3" class="col-red font-underline">Confidential</label>
+                                                                    <label v-else for="c3" class="">Confidential</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Confidentiality == 4)
+                                                                        {
+                                                                            <input asp-for="Software.Confidentiality" value="4" type="radio" id="c4" class="radio-col-red" v-model="cChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Confidentiality" value="4" type="radio" id="c4" class="radio-col-red" v-model="cChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="cChecked == 4" for="c4" class="col-red font-underline">Secret</label>
+                                                                    <label v-else for="c4" class="">Secret</label>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="font-bold col-cyan font-12">INTEGRITY</td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Integrity == 1)
+                                                                        {
+                                                                            <input asp-for="Software.Integrity" value="1" type="radio" id="i1" class="radio-col-cyan" v-model="iChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Integrity" value="1" type="radio" id="i1" class="radio-col-cyan" v-model="iChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="iChecked == 1" class="col-cyan font-underline" for="i1">None</label>
+                                                                    <label v-else class="" for="i1">None</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Integrity == 2)
+                                                                        {
+                                                                            <input asp-for="Software.Integrity" value="2" type="radio" id="i2" class="radio-col-cyan" v-model="iChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Integrity" value="2" type="radio" id="i2" class="radio-col-cyan" v-model="iChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="iChecked == 2" class="col-cyan font-underline" for="i2">Standard</label>
+                                                                    <label v-else class="" for="i2">Standard</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Integrity == 3)
+                                                                        {
+                                                                            <input asp-for="Software.Integrity" value="3" type="radio" id="i3" class="radio-col-cyan" v-model="iChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Integrity" value="3" type="radio" id="i3" class="radio-col-cyan" v-model="iChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="iChecked == 3" class="col-cyan font-underline" for="i3">Enhanced</label>
+                                                                    <label v-else class="" for="i3">Enhanced</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Integrity == 4)
+                                                                        {
+                                                                            <input asp-for="Software.Integrity" value="4" type="radio" id="i4" class="radio-col-cyan" v-model="iChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Integrity" value="4" type="radio" id="i4" class="radio-col-cyan" v-model="iChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="iChecked == 4" class="col-cyan font-underline" for="i4">Unalterable</label>
+                                                                    <label v-else class="" for="i4">Unalterable</label>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="font-bold col-teal font-12">AVAILABILITY</td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Availability == 1)
+                                                                        {
+                                                                            <input asp-for="Software.Availability" value="1" type="radio" id="a1" class="radio-col-teal" v-model="aChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Availability" value="1" type="radio" id="a1" class="radio-col-teal" v-model="aChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="aChecked == 1" class="col-teal font-underline" for="a1">Minimum service</label>
+                                                                    <label v-else class="" for="a1">Minimum service</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Availability == 2)
+                                                                        {
+                                                                            <input asp-for="Software.Availability" value="2" type="radio" id="a2" class="radio-col-teal" v-model="aChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Availability" value="2" type="radio" id="a2" class="radio-col-teal" v-model="aChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="aChecked == 2" class="col-teal font-underline" for="a2">Medium availability</label>
+                                                                    <label v-else class="" for="a2">Medium availability</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Availability == 3)
+                                                                        {
+                                                                            <input asp-for="Software.Availability" value="3" type="radio" id="a3" class="radio-col-teal" v-model="aChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Availability" value="3" type="radio" id="a3" class="radio-col-teal" v-model="aChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="aChecked == 3" class="col-teal font-underline" for="a3">Heigh availability</label>
+                                                                    <label v-else class="" for="a3">Heigh availability</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Availability == 4)
+                                                                        {
+                                                                            <input asp-for="Software.Availability" value="4" type="radio" id="a4" class="radio-col-teal" v-model="aChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Availability" value="4" type="radio" id="a4" class="radio-col-teal" v-model="aChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="aChecked == 4" class="col-teal font-underline" for="a4">No downtime tolerated</label>
+                                                                    <label v-else class="" for="a4">No downtime tolerated</label>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="font-bold col-orange font-12">TRACEABILITY</td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Traceability == 1)
+                                                                        {
+                                                                            <input asp-for="Software.Traceability" value="1" type="radio" id="t1" class="radio-col-orange" v-model="tChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Traceability" value="1" type="radio" id="t1" class="radio-col-orange" v-model="tChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="tChecked == 1" class="col-orange font-underline" for="t1">None</label>
+                                                                    <label v-else class="" for="t1">None</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Traceability == 2)
+                                                                        {
+                                                                            <input asp-for="Software.Traceability" value="2" type="radio" id="t2" class="radio-col-orange" v-model="tChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Traceability" value="2" type="radio" id="t2" class="radio-col-orange" v-model="tChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="tChecked == 2" class="col-orange font-underline" for="t2">Minimal</label>
+                                                                    <label v-else class="" for="t2">Minimal</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Traceability == 3)
+                                                                        {
+                                                                            <input asp-for="Software.Traceability" value="3" type="radio" id="t3" class="radio-col-orange" v-model="tChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Traceability" value="3" type="radio" id="t3" class="radio-col-orange" v-model="tChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="tChecked == 3" class="col-orange font-underline" for="t3">Simple</label>
+                                                                    <label v-else for="t3">Simple</label>
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (Model.Software.Traceability == 4)
+                                                                        {
+                                                                            <input asp-for="Software.Traceability" value="4" type="radio" id="t4" class="radio-col-orange" v-model="tChecked" checked />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input asp-for="Software.Traceability" value="4" type="radio" id="t4" class="radio-col-orange" v-model="tChecked" />
+                                                                        }
+                                                                    }
+                                                                    <label v-if="tChecked == 4" class="col-orange font-underline" for="t4">Detailed</label>
+                                                                    <label v-else for="t4">Detailed</label>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-4 m-t-40">
+                                                    <div class="col-lg-6">
+                                                        <div class="list-group">
+                                                            <a class="list-group-item font-bold">C : <span class="badge bg-red">{{cChecked}}</span></a>
+                                                            <a class="list-group-item font-bold">I : <span class="badge bg-cyan">{{iChecked}}</span></a>
+                                                            <a class="list-group-item font-bold">A : <span class="badge bg-teal">{{aChecked}}</span></a>
+                                                            <a class="list-group-item font-bold">T : <span class="badge bg-orange">{{tChecked}}</span></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 align-center center-align m-t-50">
+                                                        <h4 class="col-black">
+                                                            Total Software Score:
+                                                        </h4>
 
-                                <div class="form-line m-t-50">
-                                    <span asp-validation-for="LicenseStart" class="text-danger"></span>
-                                    <label asp-for="LicenseStart" class="control-label">Start of License Date</label>
-                                    <input asp-for="LicenseStart" class="form-control" type="date" placeholder="" />
-                                </div>
-
-                                <div class="form-line m-t-50">
-                                    <span asp-validation-for="LicenseEnd" class="text-danger"></span>
-                                    <label asp-for="LicenseEnd" class="control-label">End of License Date</label>
-                                    <input asp-for="LicenseEnd" class="form-control" type="date" placeholder="" />
-                                </div>
-
-                                <div class="form-line m-t-50">
-                                    <span asp-validation-for="Description" class="text-danger"></span>
-                                    <label asp-for="Description" class="control-label"></label>
-                                    <textarea asp-for="Description" rows="4" class="form-control no-resize" placeholder="Describe the software"></textarea>
-                                </div>
-
-                                <div class="form-line m-t-50">
-                                    <span asp-validation-for="UseCases" class="text-danger"></span>
-                                    <label asp-for="UseCases" class="control-label">Use Cases</label>
-                                    <textarea asp-for="UseCases" rows="4" class="form-control no-resize" placeholder="List the use cases of this software"></textarea>
-                                </div>
-
-                                <div class="form-line m-t-50">
-                                    <label asp-for="TechAreaId" class="control-label">Teach Area (eg. Network)</label>
-                                    <select asp-for="TechAreaId" class="form-control" asp-items="ViewBag.TechAreaId">
-                                        <option selected disabled>Select a tech area </option>
-                                    </select>
-                                </div>
-
-                                <div class="form-line m-t-50">
-                                    <label asp-for="TipiId" class="control-label">Type (eg. OS)</label>
-                                    <select asp-for="TipiId" class="form-control" asp-items="ViewBag.TipiId">
-                                        <option selected disabled>Select a tech area </option>
-                                    </select>
-                                </div>
-
-                                <div class="form-line m-t-50">
-                                    <label asp-for="Teams" class="control-label">Select all teams that will be using this software</label>
-                                    <select multiple name="teams" class="form-control" asp-items="ViewBag.TeamId">
-                                        <option disabled>Select teams</option>
-                                        <option value="-1">All</option>
-                                    </select>
+                                                        <h3 v-if="isNaN(this.totalScore())" class="font-12 col-orange">
+                                                            Check all fileds
+                                                        </h3>
+                                                        <h3 v-else class="col-purple font-underline">
+                                                            {{this.totalScore()}}
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <input type="submit" value="Add" class="btn bg-purple" />
+                        </div>
+                        <div class="container-fluid align-center">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <input type="submit" value="Add" class="btn bg-purple" />
+                                        <a asp-action="Index" class="btn btn-danger">Cancel</a>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
+                        </div>
+                    </form>
+                  </div>
             </div>
         </div>
     </div>
@@ -124,3 +576,93 @@
     <a class="btn btn-success" asp-action="Index">Back to List</a>
 </div>
 
+<script>
+    /*
+    let com = Vue.component('user-name', {
+        props: ['namee'],
+        template: '<div class="row clearfix m-t-30">' +
+            '<div class= "col-lg-12" >' +
+                '<div class="col-lg-4">' +
+            '<div class="form-line">' +
+            '<input type="text" class="form-control" placeholder="License" v-bind:name="whatsup" />' +
+             '</div>' +
+              '</div >' +
+        '<div class="col-lg-3" >' +
+        '<div class="form-line" >' +
+        '<input type="text" class="form-control"  placeholder="Total" :name="whatsup"/>' +
+         '</div>' +
+          '</div>' +
+        '<div class="col-lg-3">' +
+        '<div class="form-line">' +
+        '<input type="text" class="form-control" placeholder="In Use" :name="whatsup"/>' +
+         '</div >' +
+          ' </div >' +
+           '</div >' +
+            '</div >'
+    })*/
+
+    var app = new Vue({
+        el: '#vueTarget',
+        data: {
+            isUsed: @Model.Software.IsUsed.ToString().ToLower(),
+            isInternetFacing: @Model.Software.IsInternetFacing.ToString().ToLower(),
+            isMobile: @Model.Software.IsMobile.ToString().ToLower(),
+            totalLicenses: @( (Model.Software.TotalLicenses == null) ? 0 : Model.Software.TotalLicenses ),
+            licensesInUse: @( (Model.Software.LicensesInUse == null) ? 0 : Model.Software.LicensesInUse ),
+            licenseMessage: '',
+            licenseInfo: true,
+            cChecked: @( (Model.Software.Confidentiality != 0) ? Model.Software.Confidentiality : 0) ,
+            iChecked: @( (Model.Software.Integrity != 0) ? Model.Software.Integrity : 0),
+            aChecked: @( (Model.Software.Availability != 0) ? Model.Software.Availability : 0 ),
+            tChecked: @( (Model.Software.Traceability != 0) ? Model.Software.Traceability : 0 ),
+            checked: true
+        },
+        watch: {
+            check: function () {
+                this.checkLicenses()
+                this.checkNull()
+                this.checkZero()
+            }
+        },
+        methods: {
+            checkLicenses: function () {
+                if (this.licensesInUse > this.totalLicenses) {
+                    this.licensesInUse = this.totalLicenses;
+                    this.licenseMessage = 'License Numbers seem to be incorrect.';
+                } else {
+                    this.licenseMessage = '';
+                }
+            },
+            checkZero: function () {
+                if (this.licensesInUse < 0) this.licensesInUse = 0;
+                if (this.totalLicenses < 0) this.totalLicenses = 0;
+                this.checkLicenses();
+            },
+            percentageUse: function (used, total) {
+                var percentage = used / (total);
+                return Math.round(percentage * 100) + '%';
+            },
+            checkNull() {
+                this.totalLicenses = 0;
+                this.licensesInUse = 0;
+            },
+            addCom: function () {
+                this.coms.push(com);
+                namer++;
+            },
+            makeBold: function (value) {
+                if (value != null) return "font-bold";
+                return "";
+            },
+            totalScore: function () {
+                return (parseInt(this.cChecked, 10) + parseInt(this.iChecked, 10) + parseInt(this.aChecked, 10) + parseInt(this.tChecked,10)) / 4;
+            },
+            uncheck: function () {
+                return this.checked == false;
+            }
+        },
+    });
+
+
+
+</script>

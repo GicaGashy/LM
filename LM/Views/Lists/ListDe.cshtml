@@ -1,0 +1,61 @@
+﻿@model LM.ViewModels.ListsViewModel
+
+@{
+    ViewData["Title"] = "List for Departments";
+}
+
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+    <div class="card">
+        <div class="header">
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="~/images/department.png" width="40" height="40">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">Departments</h4>List of softwares grouped by the use of the departments
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            <div class="panel-group" id="accordion_17" role="tablist" aria-multiselectable="true">
+                @foreach (var department in Model.Departments)
+                {
+                    <div class="panel g-bck-col-white">
+                        <div class="panel-heading" role="tab" id="heading_@department.DepartmentId">
+                            <h2 class="panel-title font-14">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion_17" href="#collapse_@department.DepartmentId" aria-expanded="true" aria-controls="collapse_@department.DepartmentId">
+                                    <img class="tech-area-confine" src="~/images/department-2.png" alt="@department.Description" />
+                                    <span class="col-blue-grey">@department.Name</span>
+                                    <span class="badge bg-pink">
+                                        @{
+                                             @Model.Softwares.Where(so => so.ItOwner.Department.DepartmentId == department.DepartmentId).Count();
+                                        }
+                                    </span>
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse_@department.DepartmentId" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_@department.DepartmentId">
+                            <div class="panel-body">
+
+                                <ul class="col-teal ">
+                                    @foreach (var software in Model.Softwares.Where(s => s.ItOwner.Department.DepartmentId == department.DepartmentId))
+                                    {
+                                        <li class="list-unstyled m-b-10">
+                                            <span><img src="~/images/document.png" alt="Alternate Text" class="g-label" /></span>
+                                            <a asp-action="Details" asp-route-id="@software.SoftwareId" class="col-blue-grey btn-link font-12" title="@software.Tipi.Name">@software.Name </a><span class="badge bg-orange align-right">(@Math.Ceiling(software.DaysLeft()) days left)</span>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

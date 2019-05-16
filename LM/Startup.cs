@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using LM.Models.LM;
 using Microsoft.AspNetCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace LM
 {
@@ -29,6 +30,8 @@ namespace LM
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -49,6 +52,12 @@ namespace LM
                 .AddDefaultUI()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.ConfigureApplicationCookie( options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+            }
+            );
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -72,7 +81,7 @@ namespace LM
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
+            app.UseStaticFiles();
             SeedData.Seed(userManager, roleManager);
 
             app.UseMvc(routes =>

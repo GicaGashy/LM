@@ -35,6 +35,7 @@ namespace LM.Areas.Admin.Controllers
             vm.Teams = _context.Teams.AsNoTracking().ToList();
             vm.Tipis = _context.Tipies.AsNoTracking().ToList();
             vm.TechAreas = _context.TechAreas.AsNoTracking().ToList();
+            vm.Resellers = _context.Reseller.AsNoTracking().ToList();
             return View(vm);
         }
     }

@@ -122,6 +122,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box-4">
+                            <div class="icon">
+                                <i class="material-icons col-brown">equalizer</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">
+                                    <a asp-controller="Resellers" asp-action="Index">Resellers</a>
+                                </div>
+                                @{
+                                    int ResellersTotal = Model.Resellers.Count();
+                                    <div class="number count-to" data-from="0" data-to="@ResellersTotal" data-speed="1000" data-fresh-interval="20">@ResellersTotal</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

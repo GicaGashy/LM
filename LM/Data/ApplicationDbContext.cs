@@ -37,10 +37,20 @@ namespace LM.Data
                 .HasOne(t => t.Team)
                 .WithMany(st => st.SoftwareTeams)
                 .HasForeignKey(t => t.TeamId);
+            
+            
+            builder.Entity<SoftwareBusinessOwnerTeam>()
+                .HasKey(sbo => new { sbo.SoftwareId, sbo.BusinessOwnerTeamId });
 
+            builder.Entity<SoftwareBusinessOwnerTeam>()
+                .HasOne<Software>(s => s.Software)
+                .WithMany(sbo => sbo.SoftwareBusinessOwnerTeams)
+                .HasForeignKey(sbo => sbo.SoftwareId);
 
-
-
+            builder.Entity<SoftwareBusinessOwnerTeam>()
+                .HasOne<Team>(t => t.BusinessOwnerTeam)
+                .WithMany(sbo => sbo.SoftwareBusinessOwnerTeams)
+                .HasForeignKey(sbo => sbo.BusinessOwnerTeamId);
         }
 
         public DbSet<Department> Departments { get; set; }
@@ -50,5 +60,8 @@ namespace LM.Data
         public DbSet<TechArea> TechAreas{ get; set; }
         public DbSet<Software> Softwares{ get; set; }
         public DbSet<SoftwareTeam> SoftwareTeams{ get; set; }
+        public DbSet<SoftwareBusinessOwnerTeam> SoftwareBusinessOwnerTeams{ get; set; }
+        public DbSet<Purpose> Purposes{ get; set; }
+        public DbSet<Reseller> Reseller{ get; set; }
     }
 }

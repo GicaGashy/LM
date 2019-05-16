@@ -14,5 +14,6 @@ namespace LM.Areas.Admin.ViewModels
         public ICollection<Team> Teams { get; set; }
         public ICollection<Tipi> Tipis { get; set; }
         public ICollection<TechArea> TechAreas { get; set; }
+        public ICollection<Reseller> Resellers{ get; set; }
     }
 }

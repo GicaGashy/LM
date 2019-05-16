@@ -1,4 +1,182 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<LM.Models.LM.AppUser> SignInManager
+@inject UserManager<LM.Models.LM.AppUser> UserManager
+@model LM.ViewModels.HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
+
+<div class="row clearfix">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="header">
+                <div class="row clearfix">
+                    <div class="col-xs-12 col-sm-6">
+                        <h2>HOME DASHBOARD</h2>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 align-right">
+                        <div class="switch panel-switch-btn">
+
+                        </div>
+                    </div>
+                </div>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a asp-area="Generic" asp-controller="Softwares" asp-action="Create">Add New</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body text-center">
+                @if (!SignInManager.IsSignedIn(User))
+                {
+                    <div id="real_time_chart" class="dashboard-flot-chart  p-t-100 font-bold">UNDER CONSTRUCTION</div>
+                    <h5>
+                        You must be a registered user to view the lists:
+                        <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    </h5>
+                }
+                else
+                {
+                    <div class="row clearfix">
+                        <div class="col-lg-2">
+                            <small class="font-14 font-bold text-right">Number of Entries</small>
+                        </div>
+                        <form action="Index" method="get">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <select asp-for="Entries">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                            <option value="@(int.MaxValue)">All</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="form-group font-10">
+                                    <button type="submit" asp-action="Index" class="form-control btn btn-sm btn-info">Get</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable" data-page-length='@(Model.Entries == 0 ? 10 : Model.Entries)'>
+                            <thead>
+                                <tr class="">
+                                    <th>#</th>
+                                    <th>NAME</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>PURPOSE</th>
+                                    <th>INTERNET FACING</th>
+                                    <th>USAGE</th>
+                                    <th>MOBILE/TABLET</th>
+                                    <th>BUSINESS OWNERS</th>
+                                    <th>IT OWNER</th>
+                                    <th>LICENSES</th>
+                                    <th>CIAT SCORE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @{
+                                    int count = 1;
+                                    foreach (var software in Model.Softwares)
+                                    {
+                                        <tr>
+                                            <td>@(count++) </td>
+                                            <td><a asp-controller="Lists" asp-action="Details" asp-route-id="@software.SoftwareId" class="btn-link col-teal">@software.Name</a></td>
+                                            <td title="@software.Description">@Model.GetFixedString(30, software.Description)</td>
+                                            <td>@software.Purpose.Name </td>
+                                            <td>
+                                                @if (software.IsInternetFacing)
+                                                {
+                                                    <span class="badge bg-green">YES</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-orange">NO</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (software.IsUsed)
+                                                {
+                                                    <span class="badge bg-green">YES</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-orange">NO</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (software.IsMobile)
+                                                {
+                                                    <span class="badge bg-green">YES</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-orange">NO</span>
+                                                }
+                                            </td>
+                                            <td title="@{
+                                                var i = 1;
+                                                foreach (var t in software.BusinessOwnerTeams){ @(i++ + ". " + t.Name + "\n"); }} ">
+                                                @if(software.BusinessOwnerTeams.Count > 0){
+
+                                                    @software.BusinessOwnerTeams.First().Name.ToString();
+                                                }
+                                                else
+                                                {
+                                                    <i class="col-orange">No owner</i>
+                                                }
+                                            </td>
+                                            <td>@software.ItOwner.Name / <small class="font-bold">@software.ItOwnerName</small></td>
+                                            <td>@software.LicensesInUse / @software.TotalLicenses</td>
+                                            <td title="@software.GetFinalScore()">
+                                                @{
+                                                    if (@software.AverageCiatScore() <= 1)
+                                                    {
+                                                        <span class="badge bg-light-green">@software.AverageCiatScore()</span>
+                                                    }
+                                                    else if (@software.AverageCiatScore() >= 1 && @software.AverageCiatScore() <= 2)
+                                                    {
+                                                        <span class="badge bg-yellow">@software.AverageCiatScore()</span>
+                                                    }
+                                                    else if (@software.AverageCiatScore() >= 2 && @software.AverageCiatScore() <= 3)
+                                                    {
+                                                        <span class="badge bg-amber">@software.AverageCiatScore()</span>
+                                                    }
+                                                    else if(@software.AverageCiatScore() >= 3)
+                                                    {
+                                                        <span class="badge bg-deep-orange">@software.AverageCiatScore()</span>
+                                                    }
+                                                }
+
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #END# CPU Usage -->
+
+<script>
+
+</script>

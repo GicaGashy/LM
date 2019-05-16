@@ -1,0 +1,73 @@
+﻿@model LM.ViewModels.ListsViewModel
+
+@{
+    ViewData["Title"] = "List for Teams";
+}
+
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+    <div class="card">
+        <div class="header">
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="~/images/team.png" width="40" height="40">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">Teams</h4>List of softwares grouped by the use of the teams
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            <div class="panel-group" id="accordion_17" role="tablist" aria-multiselectable="true">
+                @foreach (var team in Model.Teams)
+                {
+                    int count;
+                    <div class="panel g-bck-col-white">
+                        <div class="panel-heading" role="tab" id="heading_@team.TeamId">
+                            <h2 class="panel-title font-14">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion_17" href="#collapse_@team.TeamId" aria-expanded="true" aria-controls="collapse_@team.TeamId">
+                                    <img class="tech-area-confine" src="~/images/team-2.png" alt="@team.Description" />
+                                    <span class="col-blue-grey">@team.Name</span>
+                                    <span class="badge bg-pink">
+                                        @{
+                                             @Model.SoftwareTeams.Where(st => st.TeamId == team.TeamId).Count();
+                                            count = @Model.SoftwareTeams.Where(st => st.TeamId == team.TeamId).Count();
+                                        }
+                                    </span>
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse_@team.TeamId" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_@team.TeamId">
+                            <div class="panel-body">
+
+                                <ul class="col-teal ">
+                                    @if (count != 0)
+                                    {
+                                        @foreach (var SoftwareTeam in Model.SoftwareTeams)
+                                        {
+                                            if (SoftwareTeam.TeamId == team.TeamId)
+                                            {
+                                                var tempSoftware = Model.Softwares.Where(s => s.SoftwareId == SoftwareTeam.SoftwareId).FirstOrDefault();
+                                                <li class="list-unstyled m-b-10">
+                                                    <span><img src="~/images/document.png" alt="Alternate Text" class="g-label" /></span>
+
+                                                    <a asp-action="Details" asp-route-id="@tempSoftware.SoftwareId" class="col-blue-grey btn-link font-12" title="@tempSoftware.Tipi.Name">@tempSoftware.Name </a><span class="badge bg-orange align-right">(@Math.Ceiling(tempSoftware.DaysLeft()) days left)</span>
+                                                </li>
+                                            }
+
+                                        }
+                                    }
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

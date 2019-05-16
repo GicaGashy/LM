@@ -39,7 +39,7 @@
                             <th>#</th>
                             <th>@Html.DisplayNameFor(model => model.Name).ToUpper()</th>
                             <th>@Html.DisplayNameFor(model => model.Version).ToUpper()</th>
-                            <th>@Html.DisplayNameFor(model => model.Producer).ToUpper()</th>
+                            <th>@Html.DisplayNameFor(model => model.Vendor).ToUpper()</th>
                             <th>LICENSE START</th>
                             <th>LICENSE END</th>
                             <th>DAYS LEFT</th>
@@ -59,11 +59,11 @@
                                 <th scope="row">@i</th>
                                 <td>@t.Name</td>
                                 <td>@t.Version</td>
-                                <td>@t.Producer</td>
+                                <td>@t.Vendor</td>
                                 <td>@(t.LicenseStart.Value.ToShortDateString().ToString())</td>
                                 <td>@(t.LicenseEnd.Value.ToShortDateString().ToString())</td>
                                 @if (t.DaysLeft() > 0) {
-                                    <td>@t.DaysLeft()</td>
+                                    <td>@Math.Floor(t.DaysLeft())</td>
                                 }
                                 else
                                 {

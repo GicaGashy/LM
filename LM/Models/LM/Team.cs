@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,5 +30,18 @@ namespace LM.Models.LM
 
         //Relationship with SoftwareTeam
         public List<SoftwareTeam>SoftwareTeams{ get; set; }
+
+        /*
+        //Relatsionship with SoftwareBusinessOwner
+        public List<SoftwareBusinessOwnerTeam> SoftwareBusinessOwnerTeams { get; set; }
+        */
+        public IList<SoftwareBusinessOwnerTeam> SoftwareBusinessOwnerTeams { get; set; }
+
+        //Relationship with other Foreign keys
+        [InverseProperty("ItOwner")]
+        public virtual ICollection<Software> ItSoftwares { get; set; }
+
+
+
     }
 }

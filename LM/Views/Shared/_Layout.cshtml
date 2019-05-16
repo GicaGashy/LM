@@ -10,13 +10,65 @@
     <title>@ViewData["Title"] - LM</title>
 
     <!-- Favicon-->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="~/favicon.ico">
+
+    <!-- Custom CSS-->
+    <link href="~/css/gica.css" rel="stylesheet" />
 
     <!-- Google Fonts -->
-
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
+    @*
+        <!-- Bootstrap Core Css -->
+        <link href="~/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+        <!-- Waves Effect Css -->
+        <link href="~/plugins/node-waves/waves.css" rel="stylesheet" />
+
+        <!-- Animation Css -->
+        <link href="~/plugins/animate-css/animate.css" rel="stylesheet" />
+
+        <link href="~/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+
+        <!-- Bootstrap Material Datetime Picker Css -->
+        <link href="~/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+
+        <!-- Wait Me Css -->
+        <link href="~/plugins/waitme/waitMe.css" rel="stylesheet" />
+
+        <!-- Colorpicker Css -->
+        <link href="~/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet" />
+
+        <!-- Dropzone Css -->
+        <link href="~/plugins/dropzone/dropzone.css" rel="stylesheet">
+
+        <!-- Multi Select Css -->
+        <link href="~/plugins/multi-select/css/multi-select.css" rel="stylesheet">
+
+        <!-- Bootstrap Spinner Css -->
+        <link href="~/plugins/jquery-spinner/css/bootstrap-spinner.css" rel="stylesheet">
+
+        <!-- Bootstrap Tagsinput Css -->
+        <link href="~/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+
+        <!-- Bootstrap Select Css -->
+        <link href="~/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+        <!-- noUISlider Css -->
+        <link href="~/plugins/nouislider/nouislider.min.css" rel="stylesheet" />
+
+        <!-- Morris Chart Css-->
+        <link href="~/plugins/morrisjs/morris.css" rel="stylesheet" />
+
+        <!-- Custom Css -->
+        <link href="~/css/style.css" rel="stylesheet">
+
+        <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+        <link href="~/css/themes/all-themes.css" rel="stylesheet" />
+    *@
+
+    @*Added for Chart Js test*@
     <!-- Bootstrap Core Css -->
     <link href="~/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
@@ -26,51 +78,40 @@
     <!-- Animation Css -->
     <link href="~/plugins/animate-css/animate.css" rel="stylesheet" />
 
-    <link href="~/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-
-    <!-- Bootstrap Material Datetime Picker Css -->
-    <link href="~/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
-
-    <!-- Wait Me Css -->
-    <link href="~/plugins/waitme/waitMe.css" rel="stylesheet" />
-
-    <!-- Colorpicker Css -->
-    <link href="~/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet" />
-
-    <!-- Dropzone Css -->
-    <link href="~/plugins/dropzone/dropzone.css" rel="stylesheet">
-
-    <!-- Multi Select Css -->
-    <link href="~/plugins/multi-select/css/multi-select.css" rel="stylesheet">
-
-    <!-- Bootstrap Spinner Css -->
-    <link href="~/plugins/jquery-spinner/css/bootstrap-spinner.css" rel="stylesheet">
-
-    <!-- Bootstrap Tagsinput Css -->
-    <link href="~/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
-
-    <!-- Bootstrap Select Css -->
-    <link href="~/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
-
-    <!-- noUISlider Css -->
-    <link href="~/plugins/nouislider/nouislider.min.css" rel="stylesheet" />
-
-    <!-- Morris Chart Css-->
-    <link href="~/plugins/morrisjs/morris.css" rel="stylesheet" />
-
     <!-- Custom Css -->
     <link href="~/css/style.css" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="~/css/themes/all-themes.css" rel="stylesheet" />
 
+    <!-- Bootstrap Select Css -->
+    <link href="~/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+    <!-- Bootstrap Spinner Css -->
+    <link href="~/plugins/jquery-spinner/css/bootstrap-spinner.css" rel="stylesheet">
+
+    <!-- Multi Select Css -->
+    <link href="~/plugins/multi-select/css/multi-select.css" rel="stylesheet">
+
+    <!-- Bootstrap Material Datetime Picker Css -->
+    <link href="~/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+
+    <!-- Vue JS-->
+    <script src="~/plugins/vuejs/vue.js" rel="stylesheet"></script>
+
+    <!-- JQuery DataTable Css -->
+    <link href="~/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+
+
+
+
 </head>
-<body class="theme-blue">
+<body class="theme-indigo">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
             <div class="preloader">
-                <div class="spinner-layer pl-red">
+                <div class="spinner-layer pl-green">
                     <div class="circle-clipper left">
                         <div class="circle"></div>
                     </div>
@@ -94,11 +135,11 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand text-center align-right" asp-area="" asp-controller="Home" asp-action="Index">
                     <span>
-                        <img src="~/images/teblogo.png" alt="Alternate Text" style="width: 25px; height: 25px;" />
+                        <img src="~/images/teblogo.png" alt="Alternate Text" style="height: 35px;" />
                     </span>
-                    TEB License Management Console
+                    <small>License Management Console</small>
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -124,81 +165,43 @@
                 <div class="menu">
                     <ul class="list">
                         <li class="header">MAIN NAVIGATION</li>
-                        <li class="active">
-                            <a asp-action="Index">
+
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="">
+                                <a is-active-route asp-area="Generic" asp-controller="Dashboard" asp-action="Index" title="Manage">
+                                    <i class="material-icons">dashboard</i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                        }
+
+                        <li class="">
+                            <a is-active-route asp-area="" asp-controller="Home" asp-action="Index">
                                 <i class="material-icons">home</i>
                                 <span>Home</span>
                             </a>
                         </li>
 
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle">
+                        <li class="">
+                            <a is-active-route asp-area="" asp-controller="Lists" asp-action="ListTa">
                                 <i class="material-icons">widgets</i>
-                                <span>Operating Systems</span>
+                                <span>Referential Framework</span>
                             </a>
-                            <ul class="ml-menu">
-                                <li>
-                                    <a href="javascript:void(0);" class="menu-toggle">
-                                        <span>Microsoft</span>
-                                    </a>
-                                    <ul class="ml-menu">
-                                        <li>
-                                            <a href="pages/widgets/cards/basic.html">Win7</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" class="menu-toggle">
-                                        <span>Linux</span>
-                                    </a>
-                                    <ul class="ml-menu">
-                                        <li>
-                                            <a href="pages/widgets/cards/basic.html">Ubuntu</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+
                         </li>
 
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle">
-                                <i class="material-icons">trending_down</i>
-                                <span>Multi Level Menu</span>
+                        <li class="">
+                            <a href="javascript:void(0);" class="menu-toggle" is-toggle-route>
+                                <i class="material-icons">contacts</i>
+                                <span>Owners</span>
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="javascript:void(0);">
-                                        <span>Menu Item</span>
-                                    </a>
+                                    <a is-active-route asp-area="" asp-controller="Lists" asp-action="ListTe">Teams</a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);">
-                                        <span>Menu Item - 2</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" class="menu-toggle">
-                                        <span>Level - 2</span>
-                                    </a>
-                                    <ul class="ml-menu">
-                                        <li>
-                                            <a href="javascript:void(0);">
-                                                <span>Menu Item</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="menu-toggle">
-                                                <span>Level - 3</span>
-                                            </a>
-                                            <ul class="ml-menu">
-                                                <li>
-                                                    <a href="javascript:void(0);">
-                                                        <span>Level - 4</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                    <a is-active-route asp-area="" asp-controller="Lists" asp-action="ListDe">Departments</a>
                                 </li>
                             </ul>
                         </li>
@@ -208,11 +211,11 @@
                 <!-- Footer -->
                 <div class="legal">
                     <div class="copyright">
-                        &copy; @DateTime.Now.Year - <a href="javascript:void(0);">TEB License Management Console</a>.
+                        &copy; @DateTime.Now.Year - <a href="#">TEB License Management Console</a>.
                     </div>
                     <div class="version">
-                        <b>Version: </b> 0.1 (Alpha)<br />
-                        Developed by Genc Gashi
+                        <b>Version: </b> 0.9.3 (Beta)<br />
+                        <small class="blockquote-reverse">Developed by Genc Gashi</small>
                     </div>
                 </div>
                 <!-- #Footer -->
@@ -261,6 +264,106 @@
     @RenderSection("Scripts", required: false)
 
 
+    @*
+
+
+
+        <!-- Jquery Core Js -->
+        <script src="~/plugins/jquery/jquery.min.js"></script>
+
+        <!-- Bootstrap Core Js -->
+        <script src="~/plugins/bootstrap/js/bootstrap.js"></script>
+
+        <!-- Select Plugin Js -->
+        <script src="~/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+        <!-- Slimscroll Plugin Js -->
+        <script src="~/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+        <!-- Bootstrap Colorpicker Js -->
+        <!--
+        <script src="~/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+        -->
+        <!-- Dropzone Plugin Js -->
+        <script src="~/plugins/dropzone/dropzone.js"></script>
+
+        <!-- Input Mask Plugin Js -->
+        <script src="~/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+
+        <!-- Multi Select Plugin Js -->
+        <script src="~/plugins/multi-select/js/jquery.multi-select.js"></script>
+
+        <!-- Jquery Spinner Plugin Js -->
+        <script src="~/plugins/jquery-spinner/js/jquery.spinner.js"></script>
+
+
+        <!-- Bootstrap Tags Input Plugin Js -->
+        <!--
+        <script src="~/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+        -->
+        <!-- noUISlider Plugin Js -->
+        <!--
+        <script src="~/plugins/nouislider/nouislider.js"></script>
+            -->
+        <!-- Waves Effect Plugin Js -->
+        <script src="~/plugins/node-waves/waves.js"></script>
+
+        <!-- Jquery CountTo Plugin Js -->
+        <!--
+        <script src="~/plugins/jquery-countto/jquery.countTo.js"></script>
+            -->
+        <!-- Morris Plugin Js -->
+        <!--
+        <script src="~/plugins/raphael/raphael.min.js"></script>
+        <script src="~/plugins/morrisjs/morris.js"></script>
+            -->
+        <!-- ChartJs -->
+
+        <script src="~/plugins/chartjs/Chart.bundle.js"></script>
+        <!-- <script src="~/js/pages/charts/chartjs.js"></script>-->
+        <!-- Flot Charts Plugin Js -->
+        <!--
+        <script src="~/plugins/flot-charts/jquery.flot.js"></script>
+        <script src="~/plugins/flot-charts/jquery.flot.resize.js"></script>
+        <script src="~/plugins/flot-charts/jquery.flot.pie.js"></script>
+        <script src="~/plugins/flot-charts/jquery.flot.categories.js"></script>
+        <script src="~/plugins/flot-charts/jquery.flot.time.js"></script>
+            -->
+        <!-- Moment Plugin Js -->
+
+        <script src="~/plugins/momentjs/moment.js"></script>
+
+        <!-- Bootstrap Material Datetime Picker Plugin Js -->
+        <script src="~/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+
+        <!-- Jquery DataTable Plugin Js -->
+        <!--
+        <script src="~/plugins/jquery-datatable/jquery.dataTables.js"></script>
+        <script src="~/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+        <script src="~/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+        <script src="~/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+        <script src="~/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+        <script src="~/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+        <script src="~/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+        <script src="~/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+        <script src="~/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+            -->
+        <!-- Autosize Plugin Js -->
+        <script src="~/plugins/autosize/autosize.js"></script>
+
+        <!-- Sparkline Chart Plugin Js -->
+        <!--
+        <script src="~/plugins/jquery-sparkline/jquery.sparkline.js"></script>
+            -->
+        <!-- Custom Js -->
+        <script src="~/js/admin.js"></script>
+        <script src="~/js/pages/index.js"></script>
+
+        <!-- Demo Js -->
+        <script src="~/js/demo.js"></script>
+        <script src="~/js/pages/tables/jquery-datatable.js"></script>
+    *@
 
     <!-- Jquery Core Js -->
     <script src="~/plugins/jquery/jquery.min.js"></script>
@@ -274,8 +377,19 @@
     <!-- Slimscroll Plugin Js -->
     <script src="~/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
-    <!-- Bootstrap Colorpicker Js -->
-    <script src="~/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="~/plugins/node-waves/waves.js"></script>
+
+    <!-- Chart Plugins Js -->
+    <script src="~/plugins/chartjs/Chart.bundle.js"></script>
+
+    <!-- Custom Js -->
+    <script src="~/js/admin.js"></script>
+    <script src="~/js/pages/charts/chartjs.js"></script>
+
+    <!-- Demo Js -->
+    <script src="~/js/demo.js"></script>
 
     <!-- Dropzone Plugin Js -->
     <script src="~/plugins/dropzone/dropzone.js"></script>
@@ -283,46 +397,17 @@
     <!-- Input Mask Plugin Js -->
     <script src="~/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
 
-    <!-- Multi Select Plugin Js -->
-    <script src="~/plugins/multi-select/js/jquery.multi-select.js"></script>
-
     <!-- Jquery Spinner Plugin Js -->
     <script src="~/plugins/jquery-spinner/js/jquery.spinner.js"></script>
 
-    <!-- Bootstrap Tags Input Plugin Js -->
-    <script src="~/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    <!-- Moment.js-->
+    <script src="~/plugins/momentjs/moment.js"></script>
 
-    <!-- noUISlider Plugin Js -->
-    <script src="~/plugins/nouislider/nouislider.js"></script>
-
-    <!-- Waves Effect Plugin Js -->
-    <script src="~/plugins/node-waves/waves.js"></script>
+    <!-- Chart.js -->
+    <script src="~/plugins/chartjs/Chart.js"></script>
 
     <!-- Jquery CountTo Plugin Js -->
     <script src="~/plugins/jquery-countto/jquery.countTo.js"></script>
-
-    <!-- Morris Plugin Js -->
-    <script src="~/plugins/raphael/raphael.min.js"></script>
-    <script src="~/plugins/morrisjs/morris.js"></script>
-
-    <!-- ChartJs -->
-    <script src="~/plugins/chartjs/Chart.bundle.js"></script>
-
-    <!-- Flot Charts Plugin Js -->
-    <script src="~/plugins/flot-charts/jquery.flot.js"></script>
-    <script src="~/plugins/flot-charts/jquery.flot.resize.js"></script>
-    <script src="~/plugins/flot-charts/jquery.flot.pie.js"></script>
-    <script src="~/plugins/flot-charts/jquery.flot.categories.js"></script>
-    <script src="~/plugins/flot-charts/jquery.flot.time.js"></script>
-
-    <!-- Moment Plugin Js -->
-    <script src="~/plugins/momentjs/moment.js"></script>
-
-    <!-- Bootstrap Material Datetime Picker Plugin Js -->
-    <script src="~/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-
-    <!-- Waves Effect Plugin Js -->
-    <script src="~/plugins/node-waves/waves.js"></script>
 
     <!-- Jquery DataTable Plugin Js -->
     <script src="~/plugins/jquery-datatable/jquery.dataTables.js"></script>
@@ -335,18 +420,16 @@
     <script src="~/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
     <script src="~/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
-    <!-- Autosize Plugin Js -->
-    <script src="~/plugins/autosize/autosize.js"></script>
-
-    <!-- Sparkline Chart Plugin Js -->
-    <script src="~/plugins/jquery-sparkline/jquery.sparkline.js"></script>
-
-    <!-- Custom Js -->
-    <script src="~/js/admin.js"></script>
-    <script src="~/js/pages/index.js"></script>
-
-    <!-- Demo Js -->
-    <script src="~/js/demo.js"></script>
     <script src="~/js/pages/tables/jquery-datatable.js"></script>
+
+    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+    <script src="~/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+    <!-- Jquery Knob Plugin Js -->
+    <script src="~/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <script src="~/js/pages/charts/jquery-knob.js"></script>
+
+    <script src="~/js/pages/ui/tooltips-popovers.js"></script>
+
 </body>
-</html>
+    </html>

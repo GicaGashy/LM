@@ -7,6 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20190408120545_exktra.cs" />
+    <Compile Remove="Data\Migrations\20190408120545_exktra.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190408120842_ekxtra.cs" />
+    <Compile Remove="Data\Migrations\20190408120842_ekxtra.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190408121119_BusinessIt.cs" />
+    <Compile Remove="Data\Migrations\20190408121119_BusinessIt.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190408122044_Scratch.cs" />
+    <Compile Remove="Data\Migrations\20190408122044_Scratch.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190408122202_Scratch2.cs" />
+    <Compile Remove="Data\Migrations\20190408122202_Scratch2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190409085120_PurposeAdded.cs" />
+    <Compile Remove="Data\Migrations\20190409085120_PurposeAdded.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190411104155_LicenseNumbers.cs" />
+    <Compile Remove="Data\Migrations\20190411104155_LicenseNumbers.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190411134827_ForceOwners.cs" />
+    <Compile Remove="Data\Migrations\20190411134827_ForceOwners.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190418150628_ResellerAdded.cs" />
+    <Compile Remove="Data\Migrations\20190418150628_ResellerAdded.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" PrivateAssets="All" />
@@ -21,6 +42,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Admin\Views\Resellers\Create.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Resellers\Delete.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Resellers\Index.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Admin\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -37,6 +70,9 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Identity\Pages\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Lists\ListDe.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_LoginPartialB.cshtml">

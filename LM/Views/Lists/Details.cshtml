@@ -1,0 +1,417 @@
+﻿@model LM.ViewModels.SoftwareDetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+        <div class="header @Model.BackgroundColor">
+            <h2>
+                @Model.Software.Name <small>@Model.Software.Tipi.Name</small>
+            </h2>
+            <ul class="header-dropdown m-r--5">
+                <li>
+                    <a href="javascript:void(0);">
+                        <i class="material-icons">picture_as_pdf</i>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">more_vert</i>
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="javascript:void(0);">Action</a></li>
+                        <li><a href="javascript:void(0);">Another action</a></li>
+                        <li><a href="javascript:void(0);">Something else here</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="body">
+            <!-- Header -->
+            <div class="row clearfix  col-blue-grey ">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-left p-t-20">
+                    <h3>@Model.Software.Name</h3>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-right p-t-20">
+                    <h3>by @Model.Software.Vendor</h3>
+                </div>
+            </div>
+            <hr />
+
+            <!--Review dates-->
+            <div class="row clearfix m-b--20">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    Standardized
+                    @if (Model.Software.Standardized != null)
+                    {
+                        <span>since @Model.Software.Standardized.Value.Year </span>
+                    }
+                    else
+                    {
+                        <span>-</span>
+                    }
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-center">
+                    <b>Mandatory*</b>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-right">
+                    Reviewed
+                    @if (Model.Software.Review != null)
+                    {
+                        <span> @Model.Software.Review.Value.Year</span>
+                    }
+                    else
+                    {
+                        <span>-</span>
+                    }
+                </div>
+            </div>
+            <hr />
+
+            <div class="row clearfix">
+                <!-- Use Cases-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <h5>STANDARDIZED USE CASES</h5>
+                    <small>@Model.Software.UseCases</small>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <h5>DESCRIPTION</h5>
+                    <small>@Model.Software.Description</small>
+                </div>
+             </div>
+            <div class="row clearfix">
+                <!-- License info-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <h5>LICENSE INFO</h5>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 m-t-20">
+                        <input type="text" class="knob" value="@Model.Software.LicensesInUse" data-width="125" data-height="125" data-min="0" data-max="@Model.Software.TotalLicenses" data-thickness="0.25" data-fgColor="#9C27B0"
+                               data-anglearc="250" data-angleoffset="-125" readonly>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <h5>Total Licenses:     <span class="badge bg-blue">@Model.Software.TotalLicenses</span></h5>
+                        <h5>In Use: <span class="badge bg-orange">@Model.Software.LicensesInUse</span></h5>
+                        <h1><span class="col-grey">@Model.GetLicenseUsagePercentage() %</span></h1>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <h5>CIAT INFO</h5>
+                    <h6 class="fond-bold col-green">AVERAGE SCORE: @Model.Software.AverageCiatScore()</h6>
+                    <div class="body">
+                        <ul class="list-group">
+                            <li class="list-group-item">CONFIDENTIALITY - <span class="badge bg-red">@Model.Software.Confidentiality</span><span class="badge">@Model.Software.GetConfidentialityComment(Model.Software.Confidentiality)</span> </li>
+                            <li class="list-group-item">INTEGRITY - <span class="badge bg-cyan">@Model.Software.Integrity</span> <span class="badge">@Model.Software.GetIntegrityComment(Model.Software.Integrity)</span></li>
+                            <li class="list-group-item">AVAILABILITY -   <span class="badge bg-teal">@Model.Software.Availability</span><span class="badge">@Model.Software.GetAvailabilityComment(Model.Software.Availability)</span></li>
+                            <li class="list-group-item">TRACEABILITY -  <span class="badge bg-orange">@Model.Software.Traceability</span><span class="badge">@Model.Software.GetTraceabilityComment(Model.Software.Traceability)</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h5>OWNERSHIP AND OTHER INFO</h5>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="body">
+                            <ul class="list-group">
+                                <li class="list-group-item font-bold">IT OWNER TEAM <span class="badge bg-black">@Model.Software.ItOwner.Name</span></li>
+                                <li class="list-group-item font-bold">IT OWNER'S NAME <span class="badge bg-black">@Model.Software.ItOwnerName</span></li>
+                                <li class="list-group-item font-bold">
+                                    BUSINESS OWNER TEAMS
+                                    @{
+                                        if (Model.Software.BusinessOwnerTeams.Count() <= 1)
+                                        {
+                                            foreach (var t in Model.Software.BusinessOwnerTeams)
+                                            {
+                                                <span class="badge bg-teal">@t.Name</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <ul>
+                                                @foreach (var t in Model.Software.BusinessOwnerTeams)
+                                                {
+                                                    <li class="list-unstyled">
+                                                        <span class="badge bg-teal">@t.Name</span>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    }
+
+                                </li>
+                                <li class="list-group-item font-bold">PURPOSE FOR <span class="badge bg-brown">@Model.Software.Purpose.Name</span></li>
+                                <li class="list-group-item font-bold">VENDOR <span class="badge bg-brown">@Model.Software.Vendor</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="body">
+                            <ul class="list-group">
+                                <li class="list-group-item font-bold">TYPE <span class="badge bg-blue-grey">@Model.Software.Tipi.Name</span></li>
+                                <li class="list-group-item font-bold">RESELLER <span class="badge bg-purple">@Model.Software.Reseller.Name</span></li>
+                                <li class="list-group-item font-bold">
+                                    INTERNET FACING
+                                    @if (Model.Software.IsInternetFacing)
+                                    {
+                                    <span class="badge bg-green">Yes</span>
+                                    }
+                                    else
+                                    {
+                                    <span class="badge bg-deep-orange">No</span>
+                                    }
+                                </li>
+                                <li class="list-group-item font-bold">
+                                    USAGE
+                                    @if (Model.Software.IsUsed)
+                                    {
+                                        <span class="badge bg-green">Yes</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-deep-orange">No</span>
+                                    }
+                                </li>
+                                <li class="list-group-item font-bold">
+                                    MOBILE/TABLET
+                                    @if (Model.Software.IsMobile)
+                                    {
+                                        <span class="badge bg-green">Yes</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-deep-orange">No</span>
+                                    }
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Separator-->
+            <div class="row clearfix">
+                <div class="col-lg-4 col-lg-offset-6">
+                    <hr />
+                </div>
+            </div>
+
+            <!--Graph-->
+            <div class="body">
+                <div class="progress">
+                    <div class="progress-bar bg-indigo" style="width: @Model.Graph.GetPercentageDaysPassed()">
+                        @Model.Graph.GetPercentageDaysPassed() (@Math.Ceiling(Model.Graph.DaysPassed) days)
+                    </div>
+                    <div class="progress-bar @Model.BackgroundColor progress-bar-striped active" style="width:@Model.Graph.GetPercentageDaysLeft() ">
+                        @Math.Ceiling(Model.Software.DaysLeft()) Days Left
+                    </div>
+                </div>
+            </div>
+
+            <div class="row clearfix m-b-50 m-t-50 align-center">
+                <div class="body col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <canvas id="line_chart" width="800" height="250"></canvas>
+
+                    <script>
+                        /*
+                        window.onload = function () {
+                            new Chart(document.getElementById("line_chart").getContext("2d"), config);
+                        }
+
+                        config =
+                            {
+                                type: 'horizontalBar',
+                                data: {
+                                    labels: ["", "", "     ", "Asdf", "   ", "", ""],
+                                    datasets: [
+                                    {
+                                        label: "My Second dataset",
+                                        data: [0, 0, 0, 50, 0, 0, 0],
+                                        backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    legend: true
+                                }
+                            }
+                        */
+
+                        var timeFormat = 'MM/DD/YYYY';
+
+                        var config = {
+                            type: 'line',
+                            data: {
+                                datasets: [
+                                    {
+                                        label: "",
+                                        data: [{
+                                            x: "@Model.Software.LicenseStart.Value.AddDays(-5.0).ToShortDateString()", y: 100
+                                        }, {
+                                            x: "@Model.Software.LicenseStart.Value.ToShortDateString()", y: 100
+                                        }],
+                                        fill: false,
+                                        borderColor: 'white',
+                                        showLine: false
+                                    },{
+                                        label: "Passed",
+                                        data: [{
+                                            x: "@Model.Software.LicenseStart.Value.ToShortDateString()", y: 100
+                                        }, {
+                                                x: "@DateTime.Now.Date", y: 100
+                                        }],
+                                        fill: false,
+                                        borderColor: 'rgba(2, 147, 17, 1.0)',
+                                        borderWidth: 5
+                                    },{
+                                        label: "Now",
+                                        data: [{
+                                            x: "@DateTime.Now.ToShortDateString()", y: 100
+                                        }, {
+                                            x: "@DateTime.Now.ToShortDateString()", y: 100
+                                        }],
+                                        fill: false,
+                                        borderColor: 'red',
+                                        borderWidth: 5
+                                    },{
+                                        label: "Left",
+                                        data: [{
+                                            x: "@DateTime.Now.ToShortDateString()", y: 100
+                                        }, {
+                                            x: "@Model.Software.LicenseEnd.Value.ToShortDateString()", y: 100
+                                        }],
+                                        fill: false,
+                                        borderColor: 'rgba(146,2,2, 0.5)',
+                                        borderWidth: 5
+                                    },{
+                                        label: "",
+                                        data: [{
+                                            x: "@Model.Software.LicenseEnd.Value.ToShortDateString()", y: 100
+                                        }, {
+                                            x: "@Model.Software.LicenseEnd.Value.AddDays(5.0).ToShortDateString()", y: 100
+                                        }],
+                                        fill: false,
+                                        borderColor: 'white',
+                                        showLine: false
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                title: {
+                                    display: true,
+                                    text: "@Model.Software.Name (@Model.Software.Version)"
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        type: "time",
+                                        time: {
+                                            format: timeFormat,
+                                            tooltipFormat: 'll'
+                                        },
+                                        scaleLabel: {
+                                            display: false,
+                                            labelString: 'Date'
+                                        },
+
+                                    }],
+                                    yAxes: [{
+                                        scaleLabel: {
+                                            display: false,
+                                            labelString: 'value'
+                                        }
+                                    }]
+                                },
+                                elements: {
+                                    point: {
+                                        pointStyle: 'rect'
+                                    }
+                                }
+                            }
+                        };
+
+                        window.onload = function () {
+                            var ctx = document.getElementById("line_chart").getContext("2d");
+                            window.myLine = new Chart(ctx, config);
+                        };
+
+
+
+                        /*
+                        var ctx = document.getElementById('line_chart');
+
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Risk Level'],
+                                datasets: [
+                                    {
+                                        label: 'Low',
+                                        data: [67.8],
+                                        backgroundColor: '#D6E9C6',
+                                    },
+                                    {
+                                        label: 'Moderate',
+                                        data: [20.7],
+                                        backgroundColor: '#FAEBCC',
+                                    },
+                                    {
+                                        label: 'High',
+                                        data: [11.4],
+                                        backgroundColor: '#EBCCD1',
+                                    }
+                                ]
+                            },
+                            options: {
+                                scales: {
+                                    xAxes: [{ stacked: true }],
+                                    yAxes: [{ stacked: true }]
+                                }
+                            }
+                        });
+                        */
+
+
+                    </script>
+                </div>
+            </div>
+
+            <hr />
+            <!--Footer-->
+            <div class="row clearfix">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <h5>FRAMEWORK</h5>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-center">
+                    <h5>SEE ALSO</h5>
+                    @foreach (var s in Model.SeeAlso)
+                    {
+                        <p><a asp-action="Details" asp-route-id="@s.SoftwareId" title="@s.Tipi.Name">@s.Name</a></p>
+                    }
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-right">
+                    <div class="row">
+                        <div class="col-lg-6 col-lg-offset-6 align-center">
+                            <h5>TECHNOLOGY AREA</h5>
+                            <img class="" src="~/images/techarea/@Model.Software.TechArea.Image" height="50" alt="Alternate Text" /><br />
+                            <small class="m-t-20">@Model.Software.TechArea.Name</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a onClick="history.go(-1); return false;" class="btn btn-info">Back</a>
+

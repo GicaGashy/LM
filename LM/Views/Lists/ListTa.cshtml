@@ -1,0 +1,106 @@
+﻿@model LM.ViewModels.ListsViewModel
+
+@{
+    ViewData["Title"] = "List Tech Areas";
+}
+
+
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+    <div class="card">
+        <div class="header">
+            <div class="media">
+                <div class="media-left">
+                    <a href="javascript:void(0);">
+                        <img class="media-object" src="~/images/techarea/techarea.png" width="40" height="40">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">Tech Areas</h4>List of softwares grouped by their corresponding tech areas
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            @* --> this represents as table
+
+            <div class="table-responsive">
+                <table class="table  table-hover dashboard-task-infos">
+                    <thead>
+                        <tr>
+                            <th>Tech Area</th>
+                            <th>Total</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var ta in Model.TechAreas)
+                        {
+                            <tr>
+                                <td>
+                                    <img class="tech-area-confine" src="~/images/techarea/@ta.Image" alt="@ta.Description" />
+                                    <p class="col-blue-grey font-bold">@ta.Name</p>
+
+                                    <ul class="col-teal ">
+                                        @foreach (var so in Model.Softwares.Where(software => software.TechAreaId == ta.TechAreaId))
+                                        {
+                                            <li class="list-unstyled">
+                                                <a asp-action="Details" asp-route-id="@so.SoftwareId" class="col-light-blue btn-link">@so.Name </a><span class="badge bg-orange">(@so.DaysLeft() days left)</span>
+                                            </li>
+                                        }
+                                    </ul>
+
+                                </td>
+                                <td class="font-bold">
+                                    @{
+                                        @Model.Softwares.Where(so => so.TechAreaId == ta.TechAreaId).Count().ToString();
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            *@
+            <div class="panel-group" id="accordion_17" role="tablist" aria-multiselectable="true">
+                @foreach (var ta in Model.TechAreas)
+                {
+                    <div class="panel g-bck-col-white">
+                        <div class="panel-heading" role="tab" id="heading_@ta.TechAreaId">
+                            <h2 class="panel-title font-14">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion_17" href="#collapse_@ta.TechAreaId" aria-expanded="true" aria-controls="collapse_@ta.TechAreaId">
+                                    <img class="tech-area-confine" src="~/images/techarea/@ta.Image" alt="@ta.Description" />
+                                    <span class="col-blue-grey">@ta.Name</span>
+                                    <span class="badge bg-pink">
+                                        @{
+                                            @Model.Softwares.Where(so => so.TechAreaId == ta.TechAreaId).Count().ToString();
+                                        }
+                                    </span>
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse_@ta.TechAreaId" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_@ta.TechAreaId">
+                            <div class="panel-body">
+
+                                <ul class="col-teal ">
+                                    @foreach (var so in Model.Softwares.Where(software => software.TechAreaId == ta.TechAreaId))
+                                    {
+                                        <li class="list-unstyled m-b-10">
+                                            <span><img src="~/images/document.png" alt="Alternate Text"  class="g-label"/></span>
+                                            <a asp-action="Details" asp-route-id="@so.SoftwareId" class="col-blue-grey btn-link font-12" title="@so.Tipi.Name">@so.Name </a><span class="badge bg-orange align-right">(@Math.Ceiling(so.DaysLeft()) days left)</span>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

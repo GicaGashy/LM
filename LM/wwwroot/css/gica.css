@@ -1,0 +1,72 @@
+﻿.tech-area-confine {
+    float:left;
+    width: 25px;
+    margin-right: 20px;
+}
+
+.g-bck-col-white {
+    background-color: white;
+}
+
+.g-label{
+    width: 20px;
+}
+
+.g-list-title {
+    position: relative;
+    display: inline;
+    width: 25px;
+    line-height: -25px;
+}
+
+.g-active{
+    font-weight: bold;
+    color: rebeccapurple;
+}
+
+.g-border-top {
+    border-top: 1px solid #bdbdbd;
+}
+
+.g-border-bottom{
+    border-bottom: 1px solid #bdbdbd;
+}
+
+.g-border-left {
+    border-left: 1px solid #bdbdbd;
+}
+
+.g-border-right {
+    border-right: 1px solid #bdbdbd;
+}
+
+
+.g-vl{
+    border-left: 1px solid black;
+    height: inherit;
+}
+
+.g-button-w25{
+    width: 30px !important;
+}
+
+.g-bg-circus-1 {
+    background-color: #fad089;
+}
+
+.g-bg-circus-2 {
+    background-color: #ff9c5b;
+}
+
+.g-bg-circus-3 {
+    background-color: #ed303c;
+}
+
+.g-bg-circus-4 {
+    background-color: #3b8183;
+}
+
+.g-bg-circus-5 {
+    background-color: #2b696b;
+}
+
