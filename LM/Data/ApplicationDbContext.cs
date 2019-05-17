@@ -25,6 +25,26 @@ namespace LM.Data
                 Description = "Infrastructure stuff"
             });
 
+            builder.Entity<Purpose>().HasData(new Purpose {
+                PurposeId = 1,
+                Name = "IT",
+                Description = "Purpose for IT only"
+            });
+
+            builder.Entity<Purpose>().HasData(new Purpose
+            {
+                PurposeId = 2,
+                Name = "Business",
+                Description = "Purpose for Business only"
+            });
+
+            builder.Entity<Purpose>().HasData(new Purpose
+            {
+                PurposeId = 3,
+                Name = "Other",
+                Description = "Other"
+            });
+
             builder.Entity<SoftwareTeam>()
                 .HasKey(t => new { t.SoftwareId, t.TeamId} );
 

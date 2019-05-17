@@ -36,13 +36,13 @@ namespace LM.Data
 
         private static void SeedUsers(UserManager<AppUser> userManager)
         {
-            if (userManager.FindByEmailAsync("admin_lm@teb-kos.com").Result == null)
+            if (userManager.FindByEmailAsync("admin_lm@lm.com").Result == null)
             {
               
 
                 AppUser user = new AppUser();
-                user.UserName = "admin_lm@teb-kos.com";
-                user.Email = "admin_lm@teb-kos.com";
+                user.UserName = "admin_lm@lm.com";
+                user.Email = "admin_lm@lm.com";
                
 
                 IdentityResult result = userManager.CreateAsync(user, "Kos100##").Result;
